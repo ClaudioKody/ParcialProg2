@@ -8,7 +8,7 @@ class UsuarioBase(db.Model):
     nombre=db.Column(db.String(50), nullable=False)
     apellido=db.Column(db.String(50), nullable=False)
     email=db.Column(db.String(50), nullable=True)
-    contraseña=db.Column(db.String(50), nullable=False)
+    password=db.Column(db.String(50), nullable=False)
     rol=db.Column(db.String(50), nullable=False)
     
     
@@ -23,11 +23,11 @@ class UsuarioBase(db.Model):
     def cerrar_sesion(self):
         pass
     
-    def editar_contraseña(self):
+    def editar_password(self):
         pass
     
     
-class UsuarioCliente(db.model):
+class UsuarioCliente(db.Model):
     __tablename__ = 'usuarios_cliente'
     
     id=db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)
@@ -37,21 +37,21 @@ class UsuarioCliente(db.model):
         'polymorphic_identity': 'cliente'
     }
     
-compras =db.relationship("Compra",backref="cliente", lazy=True)
+    compras =db.relationship("Compra",backref="cliente", lazy=True)
 
-def bucar_partidos(self):
-    pass
+    def bucar_partidos(self):
+        pass
 
-def seleccionar_partido(self):
-    pass
+    def seleccionar_partido(self):
+        pass
 
-def comprar_entradas(self):
-    pass
+    def comprar_entradas(self):
+        pass
 
 class Administrador(db.Model):
-    __tablaname__ = 'administradores'
+    __tablename__ = 'administradores'
     
-    id =db.Column(db.Interger, db.ForeignKey('usuarios.id'), primary_key=True)
+    id =db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)
     
     dni= db.Column(db.String(50), unique=True, nullable=False)
     
@@ -59,11 +59,11 @@ class Administrador(db.Model):
         'polymorphic_identity': 'administrador'
     }
     
-def visualizar_general(self):
-    pass
+    def visualizar_general(self):
+        pass
 
-def editar_datos(self):
-    pass
+    def editar_datos(self):
+        pass
 
-def editar_datos_permitidos(self):
-    pass
+    def editar_datos_permitidos(self):
+        pass
