@@ -1,4 +1,4 @@
-from entradas_mundial import db 
+from Entradas_Mundial import db 
 
 class Entrada(db.Model):
     nombre_asistente = db.Column(db.String(100), nullable=False)
@@ -12,11 +12,11 @@ class Entrada(db.Model):
     compra_id = db.Column(db.String(50), nullable=False)
     partido_id = db.Column(db.Integer, db.ForeignKey('partidos.id'), nullable=False)
     
-def registrar_asistente(self):
-    pass
+    def registrar_asistente(self):
+        pass
     
-def generar_codigo_qr(self):
-    pass
+    def generar_codigo_qr(self):
+        pass
     
-def enviar_email_correo(self):
-    pass
+    def enviar_email_correo(self):
+        pass

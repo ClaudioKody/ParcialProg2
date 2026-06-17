@@ -1,4 +1,4 @@
-from Entradas_Mundial.models import db
+from Entradas_Mundial import db
 
 class ActividadTuristica(db.Model):
     __tablename__='actividades_turisticas'
@@ -7,7 +7,7 @@ class ActividadTuristica(db.Model):
     nombre = db.Column(db.String(150), nullable=False)
     descripcion = db.Column(db.Text, nullable=False)
     ciudad = db.Column(db.String(100), nullable=False)
-    precio_sugerido = db.Column(db.Float, nullable=True)
+    precio_sugerido = db.Column(db.Float, nullable=True, default=0.0)
     imagen_url = db.Column(db.String(255), nullable=True)
     tipo_actividad = db.Column(db.String(50), nullable=False)
 
