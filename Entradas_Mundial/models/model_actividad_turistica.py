@@ -1,4 +1,4 @@
-from Entradas_Mundial import db
+from Entradas_Mundial.models import db
 
 class ActividadTuristica(db.Model):
     __tablename__='actividades_turisticas'

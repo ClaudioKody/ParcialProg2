@@ -1,4 +1,4 @@
-from Entradas_Mundial import db
+from Entradas_Mundial.models import db
 
 class Partido(db.Model):
     __tablename__ = 'partidos'
