@@ -22,7 +22,7 @@ def login_usuario():
                 flash('Error: Credenciales de administrador incorrectas o DNI no válido.', 'danger')
                 return redirect(url_for('login'))
         else:
-            # Login para usuario común
+            
             usuario = UsuarioCliente.query.filter_by(email=email, password=password, rol='cliente').first()
             if usuario:
                 session['user_id'] = usuario.id

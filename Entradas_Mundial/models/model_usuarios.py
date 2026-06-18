@@ -23,7 +23,7 @@ class UsuarioBase(db.Model):
     def editar_password(self):
         pass
     
-class UsuarioCliente(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
+class UsuarioCliente(UsuarioBase): 
     __tablename__ = 'usuarios_cliente'
     
     id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)
@@ -32,7 +32,7 @@ class UsuarioCliente(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
         'polymorphic_identity': 'cliente'
     }
     
-    # Esta relación buscará la clave foránea en la tabla 'compras'
+    
     compras = db.relationship("Compra", backref="cliente", lazy=True)
 
     def bucar_partidos(self):
@@ -44,7 +44,7 @@ class UsuarioCliente(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
     def comprar_entradas(self):
         pass
 
-class Administrador(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
+class Administrador(UsuarioBase): 
     __tablename__ = 'administradores'
     
     id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)

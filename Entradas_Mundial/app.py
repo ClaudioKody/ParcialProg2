@@ -2,22 +2,43 @@ from flask import Flask
 from Entradas_Mundial.config import Config
 from Entradas_Mundial.models import db
 
+<<<<<<< HEAD
+=======
+
+app = Flask(__name__)
+app.config.from_object(Config)
+
+
+app.secret_key = 'clave_secreta_mundial_2026'
+
+
+db.init_app(app)
+
+
+>>>>>>> 4a7e985446d6dc0f3c90a10fdc7628d1b7366efb
 from Entradas_Mundial.models.model_usuarios import UsuarioBase, UsuarioCliente, Administrador 
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
 from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4a7e985446d6dc0f3c90a10fdc7628d1b7366efb
 from Entradas_Mundial.routes.routes_autenticacion import routes_auth
 from Entradas_Mundial.routes.routes_partidos import routes_partidos
 from Entradas_Mundial.routes.routes_compras import routes_compras
 from Entradas_Mundial.routes.routes_turismo import routes_turismo
 
+<<<<<<< HEAD
 app = Flask(__name__)
 app.config.from_object(Config)
 app.secret_key = 'clave_secreta_mundial_2026'
 
 db.init_app(app)
+=======
+>>>>>>> 4a7e985446d6dc0f3c90a10fdc7628d1b7366efb
 
 app.register_blueprint(routes_auth)
 app.register_blueprint(routes_partidos)
@@ -29,6 +50,12 @@ if __name__ == '__main__':
         db.create_all()
         
        
+<<<<<<< HEAD
+=======
+        db.create_all()
+        
+        
+>>>>>>> 4a7e985446d6dc0f3c90a10fdc7628d1b7366efb
         admin_existe = Administrador.query.filter_by(rol='administrador').first()
         
         if not admin_existe:
