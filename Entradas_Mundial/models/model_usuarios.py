@@ -11,7 +11,7 @@ class UsuarioBase(db.Model):
     rol = db.Column(db.String(50), nullable=False)
     
  
-    _password = db.Column('password', db.Column(db.String(50)), nullable=False)
+    _password = db.Column('password', db.String(50), nullable=False)
     
     __mapper_args__ = {
         'polymorphic_on': rol
@@ -27,7 +27,7 @@ class UsuarioBase(db.Model):
     def password(self, nueva_password):
         """ Setter: Aplica una regla de validación antes de guardar el dato """
         if len(nueva_password) < 6:
-            raise ValueError("La contraseña debe tener al menos 6 caracteres por seguridad.")
+            raise ValueError("a contraseña debe tener al menos 6 caracteres por seguridad.")
         self._password = nueva_password
         
    

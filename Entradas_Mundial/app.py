@@ -57,3 +57,11 @@ if __name__ == '__main__':
             
     print("¡Aplicación Flask corriendo en modo debug!")
     app.run(debug=True)
+    
+    from flask import redirect, url_for
+
+from flask import redirect
+
+@app.route('/')
+def inicio():
+    return redirect('/login')

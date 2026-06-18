@@ -13,3 +13,6 @@ def proceso_compra(id_partido):
 @login_requerido
 def confirmacion_ticket():
     return controller_compras.mostrar_confirmacion()
+
+
+
