@@ -8,17 +8,16 @@ from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
 from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa
 
-<<<<<<<<< Temporary merge branch 1
-=========
-from Entradas_Mundial.routes.auth import auth_bp
->>>>>>>>> Temporary merge branch 2
-
 from Entradas_Mundial.routes.routes_autenticacion import routes_auth
 from Entradas_Mundial.routes.routes_partidos import routes_partidos
 from Entradas_Mundial.routes.routes_compras import routes_compras
 from Entradas_Mundial.routes.routes_turismo import routes_turismo
 
-<<<<<<<<< Temporary merge branch 1
+app = Flask(__name__)
+app.config.from_object(Config)
+app.secret_key = 'clave_secreta_mundial_2026'
+
+db.init_app(app)
 
 app.register_blueprint(routes_auth)
 app.register_blueprint(routes_partidos)
@@ -29,18 +28,7 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         
-        
-=========
-app.secret_key = 'clave_secreta_mundial_2026'
-
-db.init_app(app)
-
-app.register_blueprint(auth_bp)
-
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
->>>>>>>>> Temporary merge branch 2
+       
         admin_existe = Administrador.query.filter_by(rol='administrador').first()
         
         if not admin_existe:
@@ -48,11 +36,7 @@ if __name__ == '__main__':
                 nombre="Priscila",
                 apellido="Toledano",
                 email="admin@mundial.com",
-<<<<<<<<< Temporary merge branch 1
                 password="admin123",  
-=========
-                password="admin123", 
->>>>>>>>> Temporary merge branch 2
                 rol="administrador",  
                 dni="46664548"
             )
