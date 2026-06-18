@@ -25,3 +25,5 @@ class Entrada(db.Model):
     
     def enviar_email_correo(self):
         pass
+    
+    
