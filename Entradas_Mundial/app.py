@@ -1,18 +1,17 @@
 from flask import Flask
 from Entradas_Mundial.config import Config
 
-# 1. Importamos la db directamente desde lacarpeta 'models'
+# 1. Importamos la db directamente desde la carpeta 'models'
 from Entradas_Mundial.models import db
 
-# 2. IMPORTACIÓN DE MODELOS:
+# 2. IMPORTACIÓN DE MODELOS: Con los nombres exactos de tus archivos
 from Entradas_Mundial.models.model_usuarios import UsuarioBase, UsuarioCliente, Administrador 
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
-from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa # 🌟 ¡ESTA ES LA QUE FALTA!
+from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa
 
 app = Flask(__name__)
-
 app.config.from_object(Config)
 
 # Inicializá la base de datos con la app
@@ -31,7 +30,7 @@ if __name__ == '__main__':
                 nombre="Priscila",
                 apellido="Toledano",
                 email="admin@mundial.com",
-                contrasenia="admin123",
+                password="admin123",  # Usamos 'password' tal cual como está en tu model_usuarios
                 rol="admin",
                 dni="46664548"
             )
