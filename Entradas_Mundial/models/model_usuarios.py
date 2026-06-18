@@ -1,5 +1,6 @@
 from Entradas_Mundial.models import db
 
+
 class UsuarioBase(db.Model):
     __tablename__ = 'usuarios'
     
@@ -7,13 +8,29 @@ class UsuarioBase(db.Model):
     nombre = db.Column(db.String(50), nullable=False)
     apellido = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), nullable=True)
-    password = db.Column(db.String(50), nullable=False)
     rol = db.Column(db.String(50), nullable=False)
+    
+ 
+    _password = db.Column('password', db.Column(db.String(50)), nullable=False)
     
     __mapper_args__ = {
         'polymorphic_on': rol
     }
     
+   
+    @property
+    def password(self):
+        """ Getter: Permite leer la contraseña de forma controlada """
+        return self._password
+    
+    @password.setter
+    def password(self, nueva_password):
+        """ Setter: Aplica una regla de validación antes de guardar el dato """
+        if len(nueva_password) < 6:
+            raise ValueError("La contraseña debe tener al menos 6 caracteres por seguridad.")
+        self._password = nueva_password
+        
+   
     def iniciar_sesion(self):
         pass
     
@@ -23,7 +40,8 @@ class UsuarioBase(db.Model):
     def editar_password(self):
         pass
     
-class UsuarioCliente(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
+
+class UsuarioCliente(UsuarioBase):
     __tablename__ = 'usuarios_cliente'
     
     id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)
@@ -32,7 +50,7 @@ class UsuarioCliente(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
         'polymorphic_identity': 'cliente'
     }
     
-    # Esta relación buscará la clave foránea en la tabla 'compras'
+
     compras = db.relationship("Compra", backref="cliente", lazy=True)
 
     def bucar_partidos(self):
@@ -44,7 +62,7 @@ class UsuarioCliente(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
     def comprar_entradas(self):
         pass
 
-class Administrador(UsuarioBase): # <-- CORREGIDO: Ahora hereda de UsuarioBase
+class Administrador(UsuarioBase):
     __tablename__ = 'administradores'
     
     id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)
