@@ -5,25 +5,20 @@ from Entradas_Mundial.models.model_partido import Partido
 def listar_partidos_cliente():
     query_busqueda = request.args.get('search')
     filtro_ciudad = request.args.get('ciudad')
-    
-    # Base de la consulta
+
     partidos_query = Partido.query
     
-    # Lógica de la barra de búsqueda (Busca por país local o visitante)
     if query_busqueda:
         partidos_query = partidos_query.filter(
             (Partido.pais_local.like(f"%{query_busqueda}%")) | 
             (Partido.pais_visitante.like(f"%{query_busqueda}%"))
         )
         
-    # Filtros del panel izquierdo (image_18cd06.png)
     if filtro_ciudad:
         partidos_query = partidos_query.filter_by(ciudad=filtro_ciudad)
         
     partidos = partidos_query.all()
     return render_template('partidos.html', partidos=partidos)
-
-# --- OPERACIONES CRUD (Para el Administrador) ---
 
 def crear_partido():
     if session.get('user_rol') != 'admin': return "Acceso denegado", 403
