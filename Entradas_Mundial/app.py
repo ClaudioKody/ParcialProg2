@@ -1,10 +1,10 @@
 from flask import Flask
 from Entradas_Mundial.config import Config
 
-# 1. Importamos la db directamente desde la carpeta 'models'
+
 from Entradas_Mundial.models import db
 
-# 2. IMPORTACIÓN DE MODELOS: Con los nombres exactos de tus archivos
+
 from Entradas_Mundial.models.model_usuarios import UsuarioBase, UsuarioCliente, Administrador 
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
