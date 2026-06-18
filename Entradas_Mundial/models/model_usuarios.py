@@ -1,5 +1,5 @@
+from flask import Blueprint
 from Entradas_Mundial.models import db
-
 
 class UsuarioBase(db.Model):
     __tablename__ = 'usuarios'
@@ -10,14 +10,12 @@ class UsuarioBase(db.Model):
     email = db.Column(db.String(50), nullable=True)
     rol = db.Column(db.String(50), nullable=False)
     
- 
-    _password = db.Column('password', db.Column(db.String(50)), nullable=False)
+    _password = db.Column('password', db.String(255), nullable=False)
     
     __mapper_args__ = {
-        'polymorphic_on': rol
+        'polymorphic_on': 'rol'
     }
     
-   
     @property
     def password(self):
         """ Getter: Permite leer la contraseña de forma controlada """
@@ -30,7 +28,6 @@ class UsuarioBase(db.Model):
             raise ValueError("La contraseña debe tener al menos 6 caracteres por seguridad.")
         self._password = nueva_password
         
-   
     def iniciar_sesion(self):
         pass
     
@@ -50,7 +47,6 @@ class UsuarioCliente(UsuarioBase):
         'polymorphic_identity': 'cliente'
     }
     
-
     compras = db.relationship("Compra", backref="cliente", lazy=True)
 
     def bucar_partidos(self):
@@ -61,6 +57,7 @@ class UsuarioCliente(UsuarioBase):
 
     def comprar_entradas(self):
         pass
+
 
 class Administrador(UsuarioBase):
     __tablename__ = 'administradores'
