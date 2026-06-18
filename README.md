@@ -10,14 +10,14 @@
 ---
 
 ## Descripción del Proyecto
-Este proyecto corresponde al Parcial de Programación II para el IES 9-023[cite: 4, 28, 67]. [cite_start]Consiste en el desarrollo de una aplicación web temática responsive para la gestión y compra de entradas para el Mundial de Fútbol, integrando módulos de autenticación de usuarios, administración, partidos y servicios relacionados[cite: 4, 8, 19].
+Este proyecto corresponde al Parcial de Programación II para el IES 9-023. Consiste en el desarrollo de una aplicación web temática responsive para la gestión y compra de entradas para el Mundial de Fútbol, integrando módulos de autenticación de usuarios, administración, partidos y servicios relacionados.
 
-[cite_start]La aplicación aplica estrictamente los conceptos fundamentales de la Programación Orientada a Objetos (POO) como encapsulamiento, herencia, polimorfismo y abstracción mediante un sistema ORM (Flask-SQLAlchemy) conectado a una base de datos relacional[cite: 24, 29, 31].
+La aplicación aplica estrictamente los conceptos fundamentales de la Programación Orientada a Objetos (POO) como encapsulamiento, herencia, polimorfismo y abstracción mediante un sistema ORM (Flask-SQLAlchemy) conectado a una base de datos relacional.
 
 ---
 
 ## Arquitectura y Estructura del Código
-[cite_start]El proyecto sigue un patrón modular y limpio, separando las responsabilidades en paquetes para mantener la mantenibilidad[cite: 32, 34]:
+El proyecto sigue un patrón modular y limpio, separando las responsabilidades en paquetes para mantener la mantenibilidad:
 
 * **Entradas_Mundial/**: Paquete principal de la aplicación.
     * **controllers/**: Lógica de negocio y controladores (ej. `controller_autenticacion.py`).
@@ -38,24 +38,24 @@ Este proyecto corresponde al Parcial de Programación II para el IES 9-023[cite:
 ## Requisitos Obligatorios Implementados
 
 ### 1. Gestión de Usuarios y Seguridad
-* [cite_start]**Registro de usuarios:** Permite el alta de nuevos perfiles en el sistema[cite: 12].
-* **Inicio de sesión (Login):** Autenticación de usuarios mediante sesiones seguras[cite: 13].
-* [cite_start]**Cierre de sesión (Logout):** Destrucción segura de la sesión activa para proteger la cuenta[cite: 15].
-* [cite_start]**Páginas Protegidas:** Bloqueo de rutas específicas, accesibles únicamente para usuarios autenticados[cite: 14].
-* **Roles Polimórficos (POO):** Mapeo en la base de datos para diferenciar entre los roles de Administrador y Usuario Cliente[cite: 16, 23].
+* **Registro de usuarios:** Permite el alta de nuevos perfiles en el sistema.
+* **Inicio de sesión (Login):** Autenticación de usuarios mediante sesiones seguras.
+* **Cierre de sesión (Logout):** Destrucción segura de la sesión activa para proteger la cuenta.
+* **Páginas Protegidas:** Bloqueo de rutas específicas, accesibles únicamente para usuarios autenticados.
+* **Roles Polimórficos (POO):** Mapeo en la base de datos para diferenciar entre los roles de Administrador y Usuario Cliente.
 
 ### 2. Interfaz de Usuario
-* [cite_start]Diseño moderno, intuitivo y completamente responsive implementando Bootstrap[cite: 18, 19].
-* [cite_start]Identidad visual inmersiva enfocada en la estética de la Copa del Mundo[cite: 20].
-* Estructura organizada con menús de navegación claros y vistas fluidas[cite: 21].
+* Diseño moderno, intuitivo y completamente responsive implementando Bootstrap.
+* Identidad visual inmersiva enfocada en la estética de la Copa del Mundo.
+* Estructura organizada con menús de navegación claros y vistas fluidas
 
 ### 3. Base de Datos (MySQL)
-* [cite_start]Persistencia relacional de datos utilizando el motor MySQL[cite: 24].
-* [cite_start]Mapeo completo de las entidades principales del sistema mediante relaciones y claves foráneas[cite: 23].
-* Operaciones CRUD que garantizan la correcta manipulación de la información disponible[cite: 25].
+* Persistencia relacional de datos utilizando el motor MySQL
+* Mapeo completo de las entidades principales del sistema mediante relaciones y claves foráneas
+* Operaciones CRUD que garantizan la correcta manipulación de la información disponible
 
 ### Desafío Extra Opcional
-* [cite_start]**Recuperación de Contraseña:** Flujo completo en la ruta `/recuperar-password` para restablecer el acceso de forma segura[cite: 63].
+**Recuperación de Contraseña:** Flujo completo en la ruta `/recuperar-password` para restablecer el acceso de forma segura.
 
 ---
 
@@ -108,15 +108,15 @@ Al iniciar por primera vez, el sistema creará automáticamente todas las tablas
 ---
 
 ## Criterios de Evaluación Cubiertos
-* [cite_start]Registro, Login y Logout (15%) [cite: 52, 53]
-* Página protegida (10%) [cite: 54, 55]
-* [cite_start]Funcionalidad del módulo asignado (25%) [cite: 58, 60]
-* [cite_start]Aplicación de POO (20%) [cite: 59]
-* Diseño y uso de Bootstrap (10%) [cite: 59]
-* [cite_start]Uso de Git y GitHub (10%) [cite: 59]
-* [cite_start]Documentación y UML (10%) [cite: 59]
+* Registro, Login y Logout (15%) 
+* Página protegida (10%) 
+* Funcionalidad del módulo asignado (25%) 
+* Aplicación de POO (20%) 
+* Diseño y uso de Bootstrap (10%) 
+* Uso de Git y GitHub (10%) 
+* Documentación y UML (10%)
 
 ---
-[cite_start]**Fecha de Entrega:** 22/06/2026 [cite: 68]  
-[cite_start]**Docente:** Cristian Pietrobon [cite: 66]  
-[cite_start]**Institución:** IES 9-023 [cite: 28, 69]
+**Fecha de Entrega:** 22/06/2026  
+**Docente:** Cristian Pietrobon  
+**Institución:** IES 9-023 
