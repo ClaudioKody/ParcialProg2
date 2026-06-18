@@ -1,11 +1,39 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión - Mundial 2026{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center align-items-center" style="min-height: 70vh;">
+    <div class="col-md-5">
+        <div class="card card-custom p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="bg-mundial-green d-inline-block rounded-circle p-3 text-white mb-3 shadow">
+                    <i class="bi bi-shield-lock-fill fs-2"></i>
+                </div>
+                <h2 class="fw-bold">¡Bienvenido de nuevo!</h2>
+                <p class="text-muted">Ingresá tus datos para gestionar tus entradas[cite: 13].</p>
+            </div>
+
+            <form action="/login" method="POST">
+                <div class="form-floating mb-3">
+                    <input type="email" class="form-control" id="floatingInput" name="email" placeholder="name@example.com" required>
+                    <label for="floatingInput"><i class="bi bi-envelope text-muted me-2"></i>Correo Electrónico</label>
+                </div>
+                
+                <div class="form-floating mb-4">
+                    <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="Contraseña" required>
+                    <label for="floatingPassword"><i class="bi bi-lock text-muted me-2"></i>Contraseña</label>
+                </div>
+
+                <button type="submit" class="btn btn-mundial w-100 py-3 fs-5 shadow-sm">
+                    Ingresar a la Plataforma
+                </button>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="mb-0 text-muted">¿No tenés cuenta? <a href="/registro" class="text-success fw-bold text-decoration-none">Registrate acá</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
