@@ -1,6 +1,7 @@
 from flask import Blueprint
 from Entradas_Mundial.models import db
 
+
 class UsuarioBase(db.Model):
     __tablename__ = 'usuarios'
     

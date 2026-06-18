@@ -2,6 +2,17 @@ from flask import Flask
 from Entradas_Mundial.config import Config
 from Entradas_Mundial.models import db
 
+
+app = Flask(__name__)
+app.config.from_object(Config)
+
+
+app.secret_key = 'clave_secreta_mundial_2026'
+
+
+db.init_app(app)
+
+
 from Entradas_Mundial.models.model_usuarios import UsuarioBase, UsuarioCliente, Administrador 
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
@@ -13,11 +24,6 @@ from Entradas_Mundial.routes.routes_partidos import routes_partidos
 from Entradas_Mundial.routes.routes_compras import routes_compras
 from Entradas_Mundial.routes.routes_turismo import routes_turismo
 
-app = Flask(__name__)
-app.config.from_object(Config)
-app.secret_key = 'clave_secreta_mundial_2026'
-
-db.init_app(app)
 
 app.register_blueprint(routes_auth)
 app.register_blueprint(routes_partidos)
