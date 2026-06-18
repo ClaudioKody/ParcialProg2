@@ -1,4 +1,4 @@
-from entradas_mundial import db 
+from Entradas_Mundial import db 
 
 class Entrada(db.Model):
     id = db.Column(db.Integer, primary_key=True)
