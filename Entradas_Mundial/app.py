@@ -19,7 +19,6 @@ from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
 from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa
 
-
 from Entradas_Mundial.routes.routes_autenticacion import routes_auth
 from Entradas_Mundial.routes.routes_partidos import routes_partidos
 from Entradas_Mundial.routes.routes_compras import routes_compras
@@ -33,6 +32,8 @@ app.register_blueprint(routes_turismo)
 
 if __name__ == '__main__':
     with app.app_context():
+        db.create_all()
+        
        
         db.create_all()
         

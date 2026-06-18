@@ -1,7 +1,7 @@
 from flask import Blueprint
 from Entradas_Mundial.controllers import controller_autenticacion
 
-
+# Definimos el Blueprint real que espera tu app.py
 routes_auth = Blueprint('auth', __name__)
 
 @routes_auth.route('/login', methods=['GET', 'POST'])
