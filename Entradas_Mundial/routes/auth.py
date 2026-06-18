@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from ..models import db  # Importa la base de datos vinculada
-# Importamos la clase específica que utiliza el proyecto para los compradores
+# Importamos las clases específicas que utiliza el proyecto
 from ..models.model_usuarios import UsuarioCliente 
+from ..models.model_partido import Partido  # <-- SUMADO: Importación necesaria para los partidos
 from werkzeug.security import generate_password_hash, check_password_hash
 
 # Creamos el Blueprint para Autenticación
@@ -57,7 +58,7 @@ def registro():
             apellido=apellido,
             email=email,
             password=hashed_password,
-            rol='Usuario' # Rol estándar para los clientes de entradas
+            rol='cliente' # <-- CORREGIDO: Coincide con tu polymorphic_identity para evitar fallos de mapeo
         )
         
         # Guardamos el registro en Workbench
@@ -75,4 +76,13 @@ def registro():
 @auth_bp.route('/dashboard')
 def dashboard():
     # Esta será la página protegida para los usuarios autenticados
-    return "<h1>Bienvenido al Sistema de Entradas del Mundial 2026</h1><p>Próximamente: Lista de partidos para comprar.</p>"
+    return "<h1>Bienvenido al Sistema de Entradas del Mundial 2026</h1><p>Próximamente: Lista de partidos para comprar.</p>" 
+
+
+# --- NUEVA RUTA AGREGADA PARA LOS PARTIDOS ---
+@auth_bp.route('/partidos')
+def ver_partidos():
+    # El ORM busca todos los registros cargados de la tabla partidos
+    lista_partidos = Partido.query.all()
+    # Renderiza la nueva plantilla partidos.html pasándole la lista del fixture
+    return render_template('partidos.html', lista_partidos=lista_partidos)
