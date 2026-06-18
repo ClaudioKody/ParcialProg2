@@ -41,3 +41,5 @@ if __name__ == '__main__':
             print("El administrador oficial ya está registrado en la base de datos.")
             
     app.run(debug=True)
+    
+    print("¡Aplicación Flask corriendo en modo debug!")
