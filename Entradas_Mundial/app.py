@@ -29,6 +29,9 @@ if __name__ == '__main__':
         db.create_all()
         
        
+        db.create_all()
+        
+        
         admin_existe = Administrador.query.filter_by(rol='administrador').first()
         
         if not admin_existe:
