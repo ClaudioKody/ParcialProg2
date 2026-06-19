@@ -5,7 +5,7 @@ from Entradas_Mundial.models.model_partido import Partido
 def listar_partidos_cliente():
     query_busqueda = request.args.get('search')
     filtro_ciudad = request.args.get('ciudad')
-
+    
     partidos_query = Partido.query
     
     if query_busqueda:
@@ -20,6 +20,10 @@ def listar_partidos_cliente():
     partidos = partidos_query.all()
     return render_template('partidos.html', partidos=partidos)
 
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 def crear_partido():
     if session.get('user_rol') != 'admin': return "Acceso denegado", 403
     if request.method == 'POST':
