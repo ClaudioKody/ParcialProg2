@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Ayuda - FIFA 2026{% endblock %}
+{% block section_title %}Ayuda y Soporte{% endblock %}
+
+{% block content %}
+<div class="help-container">
+    <p class="help-subtitle">Estamos aquí para ayudarte. Revisá las dudas más comunes de nuestros usuarios.</p>
+    
+    <div class="search-box-container">
+        <input type="text" placeholder="¿En qué podemos ayudarte?" class="search-input">
+        <button class="search-btn"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </div>
+
+    <h3 class="section-subtitle">Preguntas frecuentes</h3>
+
+    <div class="faq-list">
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿Cómo compro una entrada?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Seleccioná tu partido favorito desde el panel principal, elegí la cantidad y la ubicación en el mapa del estadio, cargá tus datos de comprador y completá el pago con tu tarjeta de crédito o débito.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>¿Cómo recibo mi entrada?</span>
+                <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+                <p>Una vez confirmado el pago, tu entrada se generará automáticamente con un código QR único. Podrás verla y descargarla en formato PDF desde la sección "Mis Entradas".</p>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="section-subtitle">Contáctanos</h3>
+    <div class="contact-cards">
+        <div class="contact-card">
+            <i class="fa-solid fa-comments"></i>
+            <h4>Chat en vivo</h4>
+            <p>Habla con nuestro equipo en tiempo real.</p>
+            <a href="#">Iniciar chat</a>
+        </div>
+        <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h4>Enviar un correo</h4>
+            <p>Te responderemos a la brevedad.</p>
+            <a href="#">Enviar correo</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
