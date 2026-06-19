@@ -18,7 +18,13 @@ def listar_partidos_cliente():
         partidos_query = partidos_query.filter_by(ciudad=filtro_ciudad)
         
     partidos = partidos_query.all()
-    return render_template('partidos.html', partidos=partidos)
+    
+    # CORREGIDO: Apunta a la ruta de la subcarpeta 'partidos/'
+    return render_template('partidos/lista_partidos.html', partidos=partidos)
+
+# NUEVA FUNCIÓN AGREGADA: Controla la sección de Mis Entradas desde el Menú Lateral
+def mostrar_mis_entradas():
+    return render_template('partidos/mis_entradas.html')
 
 <<<<<<< Updated upstream
 =======
@@ -39,7 +45,7 @@ def crear_partido():
         db.session.add(nuevo_partido)
         db.session.commit()
         flash('Partido creado exitosamente.', 'success')
-        return redirect(url_for('panel_administrador'))
+        return redirect(url_for('routes_partidos.lista_partidos'))
     return render_template('admin/crear_partido.html')
 
 def editar_partido(id_partido):
@@ -52,7 +58,7 @@ def editar_partido(id_partido):
         partido.precio_base = float(request.form.get('precio_base'))
         db.session.commit()
         flash('Partido actualizado.', 'success')
-        return redirect(url_for('panel_administrador'))
+        return redirect(url_for('routes_partidos.lista_partidos'))
     return render_template('admin/editar_partido.html', partido=partido)
 
 def eliminar_partido(id_partido):
@@ -61,4 +67,4 @@ def eliminar_partido(id_partido):
     db.session.delete(partido)
     db.session.commit()
     flash('Partido eliminado correctamente.', 'success')
-    return redirect(url_for('panel_administrador'))
+    return redirect(url_for('routes_partidos.lista_partidos'))
