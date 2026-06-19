@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Entradas - FIFA 2026{% endblock %}
+{% block section_title %}Mis Entradas{% endblock %}
+
+{% block content %}
+<div class="my-tickets-container">
+    <p class="dashboard-subtitle">Aquí puedes ver todas las entradas que has comprado.</p>
+
+    <div class="tickets-tabs" style="margin-bottom: 25px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+        <span style="font-weight: bold; color: #003399; border-bottom: 3px solid #003399; padding-bottom: 10px; margin-right: 20px; cursor: pointer;">Próximos partidos</span>
+        <span style="color: #666; cursor: pointer;">Historial</span>
+    </div>
+
+    <!-- Tarjeta reducida de la entrada guardada -->
+    <div class="saved-ticket-card" style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 20px; display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #003399;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="background: #003399; color: white; padding: 10px; border-radius: 6px; text-align: center; min-width: 60px;">
+                <span style="display:block; font-size: 12px; text-transform: uppercase;">Jun</span>
+                <span style="display:block; font-size: 20px; font-weight: bold;">11</span>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 5px 0;">Argentina vs Colombia</h4>
+                <p style="margin: 0; font-size: 13px; color: #666;"><i class="fa-solid fa-location-dot"></i> MetLife Stadium | Asiento 104</p>
+            </div>
+        </div>
+        <div>
+            <a href="{{ url_for('routes_partidos.confirmacion') }}" style="padding: 8px 15px; border: 1px solid #003399; color: #003399; text-decoration: none; border-radius: 4px; font-size: 14px;">Ver entrada 🎫</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
