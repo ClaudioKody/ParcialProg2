@@ -11,29 +11,38 @@ def login_usuario():
         if es_admin:
             dni = request.form.get('dni')
             
-            admin = Administrador.query.filter_by(email=email, password=password, dni=dni, rol='admin').first()
+            # CORREGIDO: Se cambió 'admin' por 'administrador' para que coincida con app.py
+            admin = Administrador.query.filter_by(email=email, password=password, dni=dni, rol='administrador').first()
             if admin:
                 session['user_id'] = admin.id
                 session['user_nombre'] = admin.nombre
                 session['user_rol'] = 'admin'
+                
+                # CORREGIDO: Se agregó 'current_user' simulado en sesión para Jinja2 en base.html
+                session['es_admin'] = True 
+                
                 flash('¡Bienvenido Administrador!', 'success')
-                return redirect(url_for('panel_administrador'))
+                # CORREGIDO: Redirección al Blueprint de partidos con rol de admin
+                return redirect(url_for('routes_partidos.lista_partidos'))
             else:
                 flash('Error: Credenciales de administrador incorrectas o DNI no válido.', 'danger')
-                return redirect(url_for('login'))
+                return redirect(url_for('routes_auth.login'))
         else:
-            
             usuario = UsuarioCliente.query.filter_by(email=email, password=password, rol='cliente').first()
             if usuario:
                 session['user_id'] = usuario.id
                 session['user_nombre'] = usuario.nombre
                 session['user_rol'] = 'cliente'
-                return redirect(url_for('inicio_partidos'))
+                session['es_admin'] = False
+                
+                # CORREGIDO: Redirección sincronizada al catálogo del cliente
+                return redirect(url_for('routes_partidos.lista_partidos'))
             else:
                 flash('Error: Usuario o contraseña incorrectos.', 'danger')
-                return redirect(url_for('login'))
+                return redirect(url_for('routes_auth.login'))
 
-    return render_template('login.html')
+    # CORREGIDO: Apunta al formulario unificado dentro de la subcarpeta correcta
+    return render_template('autenticacion/registro.html')
 
 def registro_usuario():
     if request.method == 'POST':
@@ -43,10 +52,9 @@ def registro_usuario():
         password = request.form.get('password')
         tarjeta_preferida = request.form.get('tarjeta') 
 
-       
         if UsuarioBase.query.filter_by(email=email).first():
             flash('El correo ya está registrado.', 'warning')
-            return redirect(url_for('registro'))
+            return redirect(url_for('routes_auth.registro'))
 
         nuevo_cliente = UsuarioCliente(
             nombre=nombre,
@@ -59,15 +67,14 @@ def registro_usuario():
         db.session.add(nuevo_cliente)
         db.session.commit()
         flash('Registro exitoso. Ya podés iniciar sesión.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('routes_auth.login'))
 
-    return render_template('registro.html')
+    return render_template('autenticacion/registro.html')
 
 def logout_usuario():
     session.clear()
     flash('Sesión cerrada correctamente.', 'info')
-    return redirect(url_for('login'))
-
+    return redirect(url_for('routes_auth.login'))
 
 def recuperar_password():
     if request.method == 'POST':
@@ -79,12 +86,11 @@ def recuperar_password():
             usuario.password = nueva_password
             db.session.commit()
             flash('¡Contraseña restablecida con éxito! Ya podés iniciar sesión.', 'success')
-            return redirect(url_for('login'))
+            return redirect(url_for('routes_auth.login'))
         else:
             flash('El correo ingresado no corresponde a ningún usuario registrado.', 'danger')
             
-    return render_template('recuperar_password.html')
-
+    return render_template('autenticacion/recuperar_password.html')
 
 def login_requerido(f):
     from functools import wraps
@@ -92,6 +98,6 @@ def login_requerido(f):
     def decorated_function(*args, **kwargs):
         if 'user_id' not in session:
             flash('Por favor, iniciá sesión para acceder a esta sección.', 'warning')
-            return redirect(url_for('login'))
+            return redirect(url_for('routes_auth.login'))
         return f(*args, **kwargs)
     return decorated_function
