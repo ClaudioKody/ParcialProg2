@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %}Turismo - FIFA 2026{% endblock %}
+{% block section_title %}Turismo y Experiencias{% endblock %}
+
+{% block content %}
+<div class="tourism-container">
+    <p class="tourism-subtitle">Descubrí actividades y experiencias para disfrutar tu estadía durante el Mundial.</p>
+
+    <div class="tourism-tabs">
+        <button class="tab-btn active" onclick="cambiarTab('conciertos')">Conciertos</button>
+        <button class="tab-btn" onclick="cambiarTab('recreativas')">Actividades recreativas</button>
+    </div>
+
+    <div id="sector-conciertos" class="tourism-section">
+        <h3>Conciertos en Nueva Jersey</h3>
+        <div class="cards-grid">
+            <div class="activity-card">
+                <div class="card-date">JUN 10</div>
+                <h4>Imagine Dragons</h4>
+                <p class="place">Prudential Center, Newark, NJ</p>
+                <p class="time">20:00 HS</p>
+                <button class="btn-details">Ver detalles</button>
+            </div>
+            <div class="activity-card">
+                <div class="card-date">JUN 12</div>
+                <h4>The Weeknd</h4>
+                <p class="place">MetLife Stadium, East Rutherford, NJ</p>
+                <p class="time">21:00 HS</p>
+                <button class="btn-details">Ver detalles</button>
+            </div>
+            <div class="activity-card">
+                <div class="card-date">JUN 13</div>
+                <h4>Coldplay</h4>
+                <p class="place">MetLife Stadium, East Rutherford, NJ</p>
+                <p class="time">20:00 HS</p>
+                <button class="btn-details">Ver detalles</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="sector-recreativas" class="tourism-section" style="display: none;">
+        <h3>Actividades recreativas en Nueva Jersey</h3>
+        <div class="cards-grid">
+            <div class="activity-card">
+                <h4>Cine Hoyts Jersey Gardens</h4>
+                <p class="place">Elizabeth, NJ</p>
+                <p class="desc">Disfrutá los últimos estrenos en salas de alta calidad.</p>
+                <button class="btn-details">Ver detalles</button>
+            </div>
+            <div class="activity-card">
+                <h4>Museo de Arte de Newark</h4>
+                <p class="place">Newark, NJ</p>
+                <p class="desc">Arte, cultura e historia en el corazón de la ciudad.</p>
+                <button class="btn-details">Ver detalles</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function cambiarTab(tipo) {
+    var btns = document.querySelectorAll('.tab-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    
+    document.getElementById('sector-conciertos').style.display = 'none';
+    document.getElementById('sector-recreativas').style.display = 'none';
+    
+    if(tipo === 'conciertos') {
+        document.getElementById('sector-conciertos').style.display = 'block';
+        event.currentTarget.classList.add('active');
+    } else {
+        document.getElementById('sector-recreativas').style.display = 'block';
+        event.currentTarget.classList.add('active');
+    }
+}
+</script>
+{% endblock %}
