@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block title %}Seleccionar Asientos - FIFA 2026{% endblock %}
+{% block section_title %}Compra de entrada{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+    <!-- BARRA DE PASOS -->
+    <div class="booking-steps-bar">
+        <div class="step-node active"><span class="step-number">✓</span></div>
+        <div class="step-node active"><span class="step-number">2</span><span class="step-label">Seleccionar entradas</span></div>
+        <div class="step-node"><span class="step-number">3</span></div>
+        <div class="step-node"><span class="step-number">4</span></div>
+        <div class="step-node"><span class="step-number">5</span></div>
+    </div>
+
+    <div class="booking-layout-grid" style="display: flex; gap: 30px; margin-top: 20px;">
+        <!-- LADO IZQUIERDO: DETALLE DEL PARTIDO SELECCIONADO -->
+        <div class="match-summary-panel" style="flex: 1; background: #0b2240; color: white; padding: 20px; border-radius: 12px;">
+            <p>Fase de Grupos - Grupo A</p>
+            <h2>Argentina VS Colombia</h2>
+            <p><i class="fa-regular fa-calendar"></i> Martes, 11 de junio de 2026</p>
+            <p><i class="fa-regular fa-clock"></i> 18:00 hs (hora local)</p>
+            <p><i class="fa-solid fa-location-dot"></i> MetLife Stadium</p>
+            <p>Partido clave del Grupo A. ¡No te pierdas este gran encuentro!</p>
+        </div>
+
+        <!-- LADO DERECHO: MAPA DE SECTORES Y CANTIDAD -->
+        <div class="seats-selection-panel" style="flex: 1.5; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3>Seleccioná tus entradas</h3>
+            
+            <!-- Simulación del mapa del estadio circular de tu mockup -->
+            <div class="stadium-map-placeholder" style="text-align: center; margin: 20px 0;">
+                <div style="width: 200px; height: 150px; border: 8px solid #ffcc00; border-radius: 50%; margin: 0 auto; background: #4caf50; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                    Cancha
+                </div>
+            </div>
+
+            <!-- Lista de precios por categorías -->
+            <div class="categories-list" style="margin-bottom: 20px;">
+                <p><span style="color: #003399;">●</span> Categoría 1: USD 250</p>
+                <p><span style="color: #33ccff;">●</span> Categoría 2: USD 180</p>
+                <p><span style="color: #ffcc00;">●</span> Categoría 3: USD 120</p>
+            </div>
+
+            <div class="quantity-selector" style="display: flex; align-items: center; gap: 15px; margin-bottom: 25px;">
+                <span>Cantidad de entradas:</span>
+                <button type="button" style="padding: 5px 15px;">-</button>
+                <input type="text" value="1" style="width: 40px; text-align: center;">
+                <button type="button" style="padding: 5px 15px;">+</button>
+            </div>
+
+            <a href="{{ url_for('routes_partidos.datos_comprador') }}" class="btn-buy-ticket" style="display: block; text-align: center; text-decoration: none;">Continuar</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
