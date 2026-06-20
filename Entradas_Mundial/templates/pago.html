@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+##commit##
+{% block title %}Método de Pago - FIFA 2026{% endblock %}
+{% block section_title %}Compra de entrada{% endblock %}
+
+{% block content %}
+<div class="booking-container">
+    <!-- BARRA DE PASOS -->
+    <div class="booking-steps-bar">
+        <div class="step-node active"><span class="step-number">✓</span></div>
+        <div class="step-node active"><span class="step-number">✓</span></div>
+        <div class="step-node active"><span class="step-number">✓</span></div>
+        <div class="step-node active"><span class="step-number">4</span><span class="step-label">Pago</span></div>
+        <div class="step-node"><span class="step-number">5</span></div>
+    </div>
+
+    <div class="booking-layout-grid" style="display: flex; gap: 30px; margin-top: 20px;">
+        <!-- RESUMEN DE COMPRA + CUENTA REGRESIVA -->
+        <div class="payment-summary-panel" style="flex: 1; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3>Resumen de tu compra</h3>
+            <p><strong>Partido:</strong> Argentina vs Colombia</p>
+            <p><strong>Zona:</strong> Platea Baja (Asiento 104)</p>
+            <p><strong>Precio:</strong> USD 180</p>
+            <p><strong>Servicios e Impuestos:</strong> USD 20</p>
+            <hr>
+            <h4 style="font-size: 20px; color: #003399;">Total a pagar: USD 200</h4>
+
+            <!-- Caja de tiempo restante de tu maqueta -->
+            <div class="timer-box" style="margin-top: 30px; background: #e6f0ff; border: 1px solid #b3d1ff; padding: 15px; border-radius: 8px; text-align: center;">
+                <p style="margin: 0; font-size: 14px;">Tenés 10 minutos para finalizar la compra.</p>
+                <span id="countdown" style="font-size: 24px; font-weight: bold; color: #003399;">09:45</span>
+            </div>
+        </div>
+
+        <!-- FORMULARIO DE TARJETA -->
+        <div class="credit-card-form-panel" style="flex: 1.5; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
+            <h3>Método de pago</h3>
+            <form action="{{ url_for('routes_partidos.confirmacion') }}" method="POST">
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px;">Número de tarjeta</label>
+                    <input type="text" placeholder="1234 5678 9012 3456" style="width:100%; padding:8px;" required>
+                </div>
+                <div style="margin-bottom: 15px;">
+                    <label style="display:block; margin-bottom:5px;">Nombre en la tarjeta</label>
+                    <input type="text" placeholder="Como aparece en la tarjeta" style="width:100%; padding:8px;" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px;">
+                    <div>
+                        <label style="display:block; margin-bottom:5px;">Vencimiento</label>
+                        <input type="text" placeholder="MM / AA" style="width:100%; padding:8px;" required>
+                    </div>
+                    <div>
+                        <label style="display:block; margin-bottom:5px;">CVV</label>
+                        <input type="text" placeholder="123" style="width:100%; padding:8px;" required>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-buy-ticket" style="width: 100%; background: #003399;">Pagar USD 200</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
