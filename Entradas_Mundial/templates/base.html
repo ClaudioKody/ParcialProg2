@@ -11,7 +11,7 @@
 
     <div class="app-container">
         
-        {% if current_user.is_authenticated %}
+        {% if current_user and current_user.is_authenticated %}
             <!-- BARRA LATERAL (LOGUEADOS) -->
             <aside class="sidebar">
                 <div class="sidebar-brand">
@@ -50,12 +50,13 @@
                 </header>
 
                 <main class="content-wrapper">
-                    {% block content %}{% endblock %}
+                    <!-- ACÁ SE MUESTRAN LAS SECCIONES DE LOGUEADOS -->
+                    {# quitamos el bloque duplicado de acá #}
                 </main>
             </div>
 
         {% else %}
-            <!-- PANTALLA COMPLETA PARA LOGUEARSE -->
+            <!-- PANTALLA COMPLETA PARA NO LOGUEADOS (BIENVENIDA / LOGIN) -->
             <div style="width: 100vw; min-height: 100vh;">
                 {% block content %}{% endblock %}
             </div>
