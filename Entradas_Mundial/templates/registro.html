@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+##commit##
+{% block title %}Iniciar Sesión - FIFA 2026{% endblock %}
+
+{% block content %}
+<div class="auth-page-layout">
+    <div class="auth-card-box">
+        <div class="auth-card-header">
+            <div class="mini-logo">FIFA 2026</div>
+            <div class="mini-title">
+                <h3>ENTRADAS DEL</h3>
+                <h2>MUNDIAL 2026</h2>
+                <p>TU LUGAR EN LA HISTORIA</p>
+            </div>
+        </div>
+
+        <div class="auth-card-body">
+            <h3>Iniciar sesión</h3>
+            
+            <form action="{{ url_for('routes_auth.registro') }}" method="POST">
+                <div class="input-field-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                </div>
+
+                <div class="input-field-group">
+                    <label for="apellido">Apellido</label>
+                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa tu apellido" required>
+                </div>
+
+                <div class="input-field-group">
+                    <label for="email">Correo electrónico</label>
+                    <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
+                </div>
+
+                <div class="input-field-group checkbox-field">
+                    <input type="checkbox" id="es_admin" name="es_admin" onchange="toggleDniField()">
+                    <label for="es_admin">¿Sos admin?</label>
+                </div>
+                <p class="checkbox-help-text">Si marcás esta opción, deberás ingresar tu DNI para verificar tu rol de administrador.</p>
+
+                <div class="input-field-group" id="container_dni" style="display: none;">
+                    <label for="dni">DNI</label>
+                    <input type="text" id="dni" name="dni" placeholder="Ingresa tu DNI">
+                </div>
+
+                <button type="submit" class="btn-submit-auth">INICIAR SESIÓN</button>
+            </form>
+
+            <div class="auth-card-footer">
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function toggleDniField() {
+    var checkAdmin = document.getElementById('es_admin');
+    var blockDni = document.getElementById('container_dni');
+    var fieldDni = document.getElementById('dni');
+    
+    if (checkAdmin.checked) {
+        blockDni.style.display = 'block';
+        fieldDni.required = true;
+    } else {
+        blockDni.style.display = 'none';
+        fieldDni.required = false;
+        fieldDni.value = '';
+    }
+}
+</script>
+{% endblock %}
