@@ -11,8 +11,9 @@ def mostrar_actividades_sede():
     conciertos_locales = Concierto.query.filter_by(ubicacion=ciudad_sede).all()
     recreaciones_locales = ActividadRecreativa.query.filter_by(ubicacion=ciudad_sede).all()
     
+    # CORREGIDO: Redirección a la subcarpeta 'turismo/actividades.html' organizada
     return render_template(
-        'turismo_recomendaciones.html', 
+        'turismo/actividades.html', 
         ciudad=ciudad_sede,
         conciertos=conciertos_locales, 
         recreaciones=recreaciones_locales

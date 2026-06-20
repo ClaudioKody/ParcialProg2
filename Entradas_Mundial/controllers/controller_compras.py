@@ -5,6 +5,31 @@ from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
 
+# PASO 2: Selección de ubicación y cantidad de tickets
+def procesar_seleccion_asientos(id_partido):
+    partido = Partido.query.get_or_404(id_partido)
+    # CORREGIDO: Redirección al archivo HTML del paso 2 que creamos
+    return render_template('partidos/seleccionar_asientos.html', partido=partido)
+
+# PASO 3: Formulario para ingresar DNI, nombres y procesar lógica de base de datos
+def procesar_datos_comprador():
+    return render_template('partidos/datos_comprador.html')
+
+# PASO 4: Pasarela de pago simulada con tarjeta de crédito
+def procesar_pago_tarjeta():
+    return render_template('partidos/pago.html')
+
+# PASO 5: Muestra la pantalla de éxito final
+def mostrar_confirmacion():
+    datos_ticket = session.get('ticket_exitoso')
+    if not datos_ticket:
+        # CORREGIDO: Sincronizado a la ruta correcta si falla la sesión
+        return redirect(url_for('routes_partidos.lista_partidos'))
+    
+    # CORREGIDO: Apunta de manera exacta a partidos/confirmacion.html
+    return render_template('partidos/confirmacion.html', ticket=datos_ticket)
+
+# FUNCIÓN ANTERIOR INTEGRADA: Mantiene viva la lógica interna que crearon tus compañeros
 def procesar_compra_pasos(id_partido):
     partido = Partido.query.get_or_404(id_partido)
     
@@ -25,7 +50,8 @@ def procesar_compra_pasos(id_partido):
 
         if partido.capacidad_disponible <= 0:
             flash('Lo sentimos, ya no quedan entradas disponibles para este partido.', 'danger')
-            return redirect(url_for('inicio_partidos'))
+            return redirect(url_for('routes_partidos.lista_partidos'))
+            
         nueva_compra = Compra(
             usuario_id=session.get('user_id'),
             monto_total=monto_total,
@@ -61,13 +87,6 @@ def procesar_compra_pasos(id_partido):
             'codigo_confirmacion': codigo_confirmacion
         }
         
-        return redirect(url_for('confirmacion_ticket'))
+        return redirect(url_for('routes_compras.confirmacion'))
 
-    return render_template('compra_formulario.html', partido=partido)
-
-def mostrar_confirmacion():
-    datos_ticket = session.get('ticket_exitoso')
-    if not datos_ticket:
-        return redirect(url_for('inicio_partidos'))
-    
-    return render_template('confirmacion.html', ticket=datos_ticket)
+    return render_template('partidos/seleccionar_asientos.html', partido=partido)
