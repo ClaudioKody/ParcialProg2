@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Bienvenido - FIFA 2026{% endblock %}
+
+{% block content %}
+<div class="welcome-screen-container">
+    <div class="welcome-hero-card">
+        <div class="hero-logo-container">
+            <span class="hero-fifa">FIFA</span>
+            <span class="hero-year">2026</span>
+        </div>
+        <h2 class="hero-title">ENTRADAS DEL MUNDIAL 2026</h2>
+        <p class="hero-tagline">TU LUGAR EN LA HISTORIA</p>
+        
+        <div class="welcome-ticket-icon">
+            <i class="fa-solid fa-ticket-ticket"></i>
+        </div>
+
+        <h3 class="welcome-greet">Bienvenido</h3>
+        <p class="welcome-text">Accedé para gestionar tus entradas del Mundial 2026.</p>
+
+        <div class="welcome-actions">
+            <a href="{{ url_for('routes_auth.login') }}" class="btn-action-primary"><i class="fa-solid fa-user"></i> INICIAR SESIÓN</a>
+            <a href="{{ url_for('routes_auth.registro') }}" class="btn-action-secondary"><i class="fa-solid fa-user-plus"></i> REGISTRARSE</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
