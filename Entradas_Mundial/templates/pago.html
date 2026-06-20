@@ -5,7 +5,7 @@
 
 {% block content %}
 <div class="booking-container">
-    <!-- BARRA DE PASOS -->
+    
     <div class="booking-steps-bar">
         <div class="step-node active"><span class="step-number">✓</span></div>
         <div class="step-node active"><span class="step-number">✓</span></div>
@@ -15,7 +15,7 @@
     </div>
 
     <div class="booking-layout-grid" style="display: flex; gap: 30px; margin-top: 20px;">
-        <!-- RESUMEN DE COMPRA + CUENTA REGRESIVA -->
+        
         <div class="payment-summary-panel" style="flex: 1; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
             <h3>Resumen de tu compra</h3>
             <p><strong>Partido:</strong> Argentina vs Colombia</p>
@@ -25,14 +25,14 @@
             <hr>
             <h4 style="font-size: 20px; color: #003399;">Total a pagar: USD 200</h4>
 
-            <!-- Caja de tiempo restante de tu maqueta -->
+            
             <div class="timer-box" style="margin-top: 30px; background: #e6f0ff; border: 1px solid #b3d1ff; padding: 15px; border-radius: 8px; text-align: center;">
                 <p style="margin: 0; font-size: 14px;">Tenés 10 minutos para finalizar la compra.</p>
                 <span id="countdown" style="font-size: 24px; font-weight: bold; color: #003399;">09:45</span>
             </div>
         </div>
 
-        <!-- FORMULARIO DE TARJETA -->
+        
         <div class="credit-card-form-panel" style="flex: 1.5; background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
             <h3>Método de pago</h3>
             <form action="{{ url_for('routes_partidos.confirmacion') }}" method="POST">

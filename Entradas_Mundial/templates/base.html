@@ -10,22 +10,22 @@
 <body>
 
     <div class="app-container">
-        <!-- BARRA LATERAL IZQUIERDA -->
+        
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <div class="brand-logo">FIFA</div>
                 <div class="brand-year">2026</div>
             </div>
             
-            <!-- MENÚ ADAPTATIVO SEGÚN EL ROL -->
+            
             <nav class="sidebar-menu">
-                <!-- SI ES ADMINISTRADOR -->
+                
                 {% if current_user.es_admin %}
                     <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-chart-line"></i> Panel Admin</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-plus"></i> Cargar Partidos</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Gestionar Usuarios</a>
                 
-                <!-- SI ES UN USUARIO/CLIENTE COMÚN -->
+                
                 {% else %}
                     <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-calendar-days"></i> Partidos</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-ticket"></i> Mis Entradas</a>
@@ -40,7 +40,7 @@
             </div>
         </aside>
 
-        <!-- CONTENEDOR DERECHO PRINCIPAL -->
+        
         <div class="main-layout">
             <header class="top-bar">
                 <div class="page-context">
@@ -54,7 +54,7 @@
 
             <main class="content-wrapper">
                 {% block content %}
-                <!-- Acá se va a inyectar el contenido de las otras pantallas -->
+                
                 {% endblock %}
             </main>
         </div>
