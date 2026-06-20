@@ -7,7 +7,7 @@ routes_auth = Blueprint ('routes_auth', __name__)
 @routes_auth.route('/')
 def index_auth():
     # Renderiza la pantalla de bienvenida con los botones de Iniciar Sesión / Registrarse
-    return render_template('index_auth.html')
+    return render_template('index_auth.html', current_user=None)
 
 @routes_auth.route('/login', methods=['GET', 'POST'])
 def login():
