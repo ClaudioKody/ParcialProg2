@@ -1,61 +1,96 @@
 {% extends 'base.html' %}
 
-{% block title %}Bienvenido  - FIFA 2026{% endblock %}
-  
-{% block content %}
-<<<<<<< HEAD
-<div class="auth-bg-wrapper">
-    <div class="auth-card">
-=======
 
-#Prueba#
-<div class="welcome-screen-container">
-    <div class="welcome-hero-card">
-        <div class="hero-logo-container">
-            <span class="hero-fifa">FIFA</span>
-            <span class="hero-year">2026</span>
-        </div>
-        <h2 class="hero-title">ENTRADAS DEL MUNDIAL 2026</h2>
-        <p class="hero-tagline">TU LUGAR EN LA HISTORIA</p>
->>>>>>> b42a79914a01d5d4015afb45f3e2f1ce9d92710e
-        
+
+{% block title %}Bienvenido  - FIFA 2026{% endblock %}
+
+ 
+
+{% block content %}
+
+<div class="auth-bg-wrapper">
+
+    <div class="auth-card">
+
+       
+
         <div class="auth-tabs">
+
             <a href="{{ url_for('routes_auth.login') }}" class="auth-tab-btn active" style="text-align: center; text-decoration: none;">
+
                 <i class="fa-solid fa-right-to-bracket"></i> INICIAR SESIÓN
+
             </a>
+
             <a href="{{ url_for('routes_auth.registro') }}" class="auth-tab-btn" style="text-align: center; text-decoration: none; background: #e9ecef;">
+
                 <i class="fa-solid fa-user-plus"></i> REGISTRARSE
+
             </a>
+
         </div>
+
+
 
         <div class="auth-body" style="text-align: center;">
+
             <div class="sidebar-brand" style="border: none; padding-bottom: 10px;">
+
                 <div class="brand-logo" style="color: var(--azul-fifa-oscuro); font-size: 32px;">FIFA</div>
+
                 <div class="brand-year" style="color: var(--azul-fifa-medio);">2026</div>
+
             </div>
-            
+
+           
+
             <h2 style="color: var(--azul-fifa-oscuro); font-size: 20px; font-weight: 800; margin-bottom: 5px; letter-spacing: 0.5px;">
+
                 ENTRADAS DEL MUNDIAL 2026
+
             </h2>
+
             <p style="color: var(--texto-mutado); font-size: 13px; font-weight: bold; margin-bottom: 25px; letter-spacing: 1px;">
+
                 TU LUGAR EN LA HISTORIA
+
             </p>
-            
+
+           
+
             <div style="font-size: 50px; color: var(--azul-fifa-medio); margin-bottom: 20px;">
+
                 <i class="fa-solid fa-ticket"></i>
+
             </div>
+
+
 
             <h3 style="color: var(--azul-fifa-oscuro); font-weight: 700; margin-bottom: 10px;">Bienvenido</h3>
+
             <p style="color: var(--texto-mutado); font-size: 14px; margin-bottom: 30px;">
+
                 Accedé para gestionar tus entradas del Mundial 2026.
+
             </p>
 
+
+
             <div class="form-group">
+
                 <a href="{{ url_for('routes_auth.login') }}" class="btn-buy-ticket" style="display: block; width: 100%; text-align: center; padding: 12px;">
+
                     Comenzar
+
                 </a>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
-{% endblock %}
+
+{% endblock %} 
+
