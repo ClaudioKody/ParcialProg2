@@ -10,7 +10,7 @@ class Compra(db.Model):
     metodo_pago = db.Column(db.String(50), nullable=False)
     estado_pago = db.Column(db.String(20), nullable=False)
     
-    # CORREGIDO: Apunta a 'usuarios_cliente.id' para coincidir con la relación
+    
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios_cliente.id'), nullable=False) 
     
     entradas_asociadas = db.relationship('Entrada', backref='compra', lazy=True) 

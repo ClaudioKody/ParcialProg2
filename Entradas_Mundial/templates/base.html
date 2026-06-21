@@ -11,27 +11,29 @@
 
     <div class="app-container">
         
-        {% if current_user and current_user.is_authenticated %}
-            <!-- BARRA LATERAL (LOGUEADOS) -->
-            <aside class="sidebar">
-                <div class="sidebar-brand">
-                    <div class="brand-logo">FIFA</div>
-                    <div class="brand-year">2026</div>
-                </div>
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-logo">FIFA</div>
+                <div class="brand-year">2026</div>
+            </div>
+            
+            
+            <nav class="sidebar-menu">
                 
-                <nav class="sidebar-menu">
-                    {% if current_user.es_admin %}
-                        <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-chart-line"></i> Panel Admin</a>
-                        <a href="#" class="menu-item"><i class="fa-solid fa-plus"></i> Cargar Partidos</a>
-                        <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Gestionar Usuarios</a>
-                    {% else %}
-                        <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-calendar-days"></i> Partidos</a>
-                        <a href="#" class="menu-item"><i class="fa-solid fa-ticket"></i> Mis Entradas</a>
-                        <a href="{{ url_for('routes_turismo.ver_turismo') }}" class="menu-item"><i class="fa-solid fa-plane-departure"></i> Turismo</a>
-                        <a href="#" class="menu-item"><i class="fa-solid fa-user"></i> Perfil</a>
-                        <a href="{{ url_for('routes_ayuda.ayuda') }}" class="menu-item"><i class="fa-solid fa-circle-question"></i> Ayuda</a>
-                    {% endif %}
-                </nav>
+                {% if current_user.es_admin %}
+                    <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-chart-line"></i> Panel Admin</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-plus"></i> Cargar Partidos</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Gestionar Usuarios</a>
+                
+                
+                {% else %}
+                    <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-calendar-days"></i> Partidos</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-ticket"></i> Mis Entradas</a>
+                    <a href="{{ url_for('routes_turismo.ver_turismo') }}" class="menu-item"><i class="fa-solid fa-plane-departure"></i> Turismo</a>
+                    <a href="#" class="menu-item"><i class="fa-solid fa-user"></i> Perfil</a>
+                    <a href="{{ url_for('routes_ayuda.ayuda') }}" class="menu-item"><i class="fa-solid fa-circle-question"></i> Ayuda</a>
+                {% endif %}
+            </nav>
 
                 <div class="sidebar-footer">
                     <a href="{{ url_for('routes_auth.logout') }}" class="menu-item logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
@@ -49,19 +51,12 @@
                     </div>
                 </header>
 
-                <main class="content-wrapper">
-                    <!-- ACÁ SE MUESTRAN LAS SECCIONES DE LOGUEADOS -->
-                    {# quitamos el bloque duplicado de acá #}
-                </main>
-            </div>
-
-        {% else %}
-            <!-- PANTALLA COMPLETA PARA NO LOGUEADOS (BIENVENIDA / LOGIN) -->
-            <div style="width: 100vw; min-height: 100vh;">
-                {% block content %}{% endblock %}
-            </div>
-        {% endif %}
-
+            <main class="content-wrapper">
+                {% block content %}
+                <!-- Acá se va a inyectar el contenido de las otras pantallas -->
+                {% endblock %}
+            </main>
+        </div>
     </div>
 
 </body>

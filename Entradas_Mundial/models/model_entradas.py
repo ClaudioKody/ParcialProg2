@@ -3,7 +3,7 @@ from Entradas_Mundial.models import db
 class Entrada(db.Model):
     __tablename__ = 'entradas' 
     
-    id = db.Column(db.Integer, primary_key=True) # <-- Agregado
+    id = db.Column(db.Integer, primary_key=True) 
     nombre_asistente = db.Column(db.String(100), nullable=False)
     apellido_asistente = db.Column(db.String(100), nullable=False)
     email_asistente = db.Column(db.String(100), nullable=False)

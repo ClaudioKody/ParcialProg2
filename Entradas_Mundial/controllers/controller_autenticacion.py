@@ -11,18 +11,18 @@ def login_usuario():
         if es_admin:
             dni = request.form.get('dni')
             
-            # CORREGIDO: Se cambió 'admin' por 'administrador' para que coincida con app.py
+            
             admin = Administrador.query.filter_by(email=email, password=password, dni=dni, rol='administrador').first()
             if admin:
                 session['user_id'] = admin.id
                 session['user_nombre'] = admin.nombre
                 session['user_rol'] = 'admin'
                 
-                # CORREGIDO: Se agregó 'current_user' simulado en sesión para Jinja2 en base.html
+                
                 session['es_admin'] = True 
                 
                 flash('¡Bienvenido Administrador!', 'success')
-                # CORREGIDO: Redirección al Blueprint de partidos con rol de admin
+                
                 return redirect(url_for('routes_partidos.lista_partidos'))
             else:
                 flash('Error: Credenciales de administrador incorrectas o DNI no válido.', 'danger')
@@ -35,13 +35,13 @@ def login_usuario():
                 session['user_rol'] = 'cliente'
                 session['es_admin'] = False
                 
-                # CORREGIDO: Redirección sincronizada al catálogo del cliente
+                
                 return redirect(url_for('routes_partidos.lista_partidos'))
             else:
                 flash('Error: Usuario o contraseña incorrectos.', 'danger')
                 return redirect(url_for('routes_auth.login'))
 
-    # CORREGIDO: Apunta al formulario unificado dentro de la subcarpeta correcta
+    
     return render_template('autenticacion/registro.html')
 
 def registro_usuario():

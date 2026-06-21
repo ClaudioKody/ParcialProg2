@@ -4,11 +4,11 @@ class ActividadTuristica(db.Model):
     __tablename__='actividades_turisticas'
 
     id = db.Column(db.Integer, primary_key=True)
-    nombre = db.Column(db.String(150), nullable=False)
+    nombre = db.Column(db.String(70), nullable=False)
     descripcion = db.Column(db.Text, nullable=False)
-    ciudad = db.Column(db.String(100), nullable=False)
+    ciudad = db.Column(db.String(50), nullable=False)
     precio_sugerido = db.Column(db.Float, nullable=True)
-    imagen_url = db.Column(db.String(255), nullable=True)
+    imagen_url = db.Column(db.String(200), nullable=True)
     tipo_actividad = db.Column(db.String(50), nullable=False)
 
     __mapper_args__ = {
@@ -26,7 +26,7 @@ class Concierto(ActividadTuristica):
     id = db.Column(db.Integer, db.ForeignKey('actividades_turisticas.id'), primary_key=True)
 
     artista = db.Column(db.String(100), nullable=True)
-    estadio_recital = db.Column(db.String(100), nullable=True)
+    estadio_recital = db.Column(db.String(70), nullable=True)
 
     __mapper_args__ = {
         'polymorphic_identity': 'concierto'
@@ -39,8 +39,8 @@ class ActividadRecreativa(ActividadTuristica):
     __tablename__ = 'actividades_recreativas'
     id = db.Column(db.Integer, db.ForeignKey('actividades_turisticas.id'), primary_key=True)
     
-    horarios_disponibles = db.Column(db.String(255), nullable=True)
-    direccion_establecimiento = db.Column(db.String(255), nullable=True)
+    horarios_disponibles = db.Column(db.String(250), nullable=True)
+    direccion_establecimiento = db.Column(db.String(250), nullable=True)
 
     __mapper_args__ = {
         'polymorphic_identity': 'actividad_recreativa'
