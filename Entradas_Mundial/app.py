@@ -55,7 +55,7 @@ if __name__ == '__main__':
                 nombre="Priscila",
                 apellido="Toledano",
                 email="admin@mundial.com",
-                password=generate_password_hash("admin123"),
+                password="admin123",
                 rol="administrador",
                 dni="46664548"
             )
