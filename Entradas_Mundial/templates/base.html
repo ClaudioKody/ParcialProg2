@@ -26,9 +26,9 @@
                         <a href="{{ url_for('routes_partidos.listar_usuarios') }}" class="menu-item"><i class="fa-solid fa-users"></i> Gestionar Usuarios</a>
                     {% else %}
                         <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-calendar-days"></i> Partidos</a>
-                        <a href="#" class="menu-item"><i class="fa-solid fa-ticket"></i> Mis Entradas</a>
-                        <a href="{{ url_for('routes_turismo.listar_actividades') }}" class="menu-item"><i class="fa-solid fa-plane-departure"></i> Turismo</a>
-                        <a href="#" class="menu-item"><i class="fa-solid fa-user"></i> Perfil</a>
+                        <a href="{{ url_for('routes_partidos.mostrar_mis_entradas') }}" class="menu-item"><i class="fa-solid fa-ticket"></i> Mis Entradas</a>
+                        <a href="{{ url_for('routes_turismo.mostrar_actividades_sede') }}" class="menu-item"><i class="fa-solid fa-plane-departure"></i> Turismo</a>
+                        <a href="{{ url_for('routes_auth.perfil') }}" class="menu-item"><i class="fa-solid fa-user"></i> Perfil</a>
                         <a href="{{ url_for('routes_ayuda.ayuda') }}" class="menu-item"><i class="fa-solid fa-circle-question"></i> Ayuda</a>
                     {% endif %}
                 {% else %}
@@ -49,7 +49,6 @@
                 <div class="page-context">
                     <h2>{% block section_title %}Entradas del Mundial 2026{% endblock %}</h2>
                 </div>
-
                 <div class="user-welcome">
                     {% if current_user.is_authenticated %}
                         <span>Bienvenido, <strong>{{ current_user.nombre }}</strong></span>

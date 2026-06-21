@@ -48,19 +48,30 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
         
-        # Creación del Administrador
         from Entradas_Mundial.models.model_usuarios import Administrador
-        if not Administrador.query.filter_by(rol='administrador').first():
-            admin_fijo = Administrador(
-                nombre="Priscila",
-                apellido="Toledano",
-                email="admin@mundial.com",
-                password="admin123",
-                rol="administrador",
-                dni="46664548"
-            )
-            db.session.add(admin_fijo)
-            db.session.commit()
-            print("Administrador registrado correctamente.")
+        
+        # Lista unificada de administradores
+        lista_admins = [
+            {"nombre": "Priscila", "apellido": "Toledano", "email": "admin@mundial.com", "dni": "46664548"},
+            {"nombre": "Tomás", "apellido": "Naveda", "email": "admin1@mundial.com", "dni": "46662116"},
+            {"nombre": "Claudio", "apellido": "Pérez", "email": "admin2@mundial.com", "dni": "46328090"},
+            {"nombre": "Selene", "apellido": "Quintero", "email": "admin3@mundial.com", "dni": "45139959"}
+        ]
+        
+        for datos in lista_admins:
+            # Buscamos si el admin ya existe por su email único
+            if not Administrador.query.filter_by(email=datos['email']).first():
+                admin_nuevo = Administrador(
+                    nombre=datos['nombre'],
+                    apellido=datos['apellido'],
+                    email=datos['email'],
+                    password=generate_password_hash("admin123"),
+                    rol="administrador",
+                    dni=datos['dni']
+                )
+                db.session.add(admin_nuevo)
+                print(f"Administrador {datos['nombre']} registrado correctamente.")
+        
+        db.session.commit()
             
     app.run(debug=True)

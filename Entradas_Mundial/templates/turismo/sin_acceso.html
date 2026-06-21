@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block section_title %}Turismo{% endblock %}
+
+{% block content %}
+<div style="padding: 40px; text-align: center; background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <h3>Acceso restringido</h3>
+    <p>Para ver las actividades turísticas, primero debes adquirir un ticket.</p>
+    <br>
+    <a href="{{ url_for('routes_partidos.lista_partidos') }}" style="padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px;">
+        Ir a comprar tickets
+    </a>
+</div>
+{% endblock %}

@@ -27,12 +27,12 @@
                 {% endif %}
             {% endwith %}
             
-            <form action="{{ url_for('routes_auth.login') }}" method="POST">
+            <form action="{{ url_for('routes_auth.login') }}" method="POST" autocomplete="off">
                 <div class="form-group mb-3">
-                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required autocomplete="off">
                 </div>
                 <div class="form-group mb-3">
-                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required autocomplete="off">
                 </div>
 
                 <div class="form-check mb-3">
@@ -41,7 +41,7 @@
                 </div>
 
                 <div class="form-group mb-3" id="campoDNI" style="display: none;">
-                    <input type="text" name="dni" class="form-control" placeholder="Ingrese su DNI de Administrador">
+                    <input type="text" name="dni" class="form-control" placeholder="Ingrese su DNI de Administrador" autocomplete="off">
                 </div>
 
                 <button type="submit" class="btn-buy-ticket" style="width: 100%; padding: 12px; border: none; cursor: pointer;">

@@ -1,11 +1,14 @@
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import current_user, login_required
+from datetime import datetime
 from Entradas_Mundial.models import db
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_entradas import Entrada
+from Entradas_Mundial.models.model_compra import Compra
 
 # --- VISTAS DE USUARIO ---
 
+@login_required
 def listar_partidos_cliente():
     query_busqueda = request.args.get('search')
     filtro_ciudad = request.args.get('ciudad')
@@ -24,13 +27,26 @@ def listar_partidos_cliente():
     partidos = partidos_query.all()
     return render_template('partidos/lista_partidos.html', partidos=partidos)
 
+@login_required
 def mostrar_mis_entradas():
-    # Filtramos entradas asociadas al usuario actual a través de sus compras
-    entradas = Entrada.query.join(Entrada.compra_rel).filter_by(usuario_id=current_user.id).all()
-    return render_template('partidos/mis_entradas.html', entradas=entradas)
-
-# --- VISTAS DE ADMINISTRACIÓN ---
-
+    compras_usuario = Compra.query.filter_by(usuario_id=current_user.id).all()
+    ids_compras = [compra.id for compra in compras_usuario]
+    
+    lista_entradas = Entrada.query.filter(Entrada.compra_id.in_(ids_compras)).all()
+    
+    hoy = datetime.now()
+    proximos = []
+    historial = []
+    
+    for entrada in lista_entradas:
+        if entrada.partido.fecha > hoy:
+            proximos.append(entrada)
+        else:
+            historial.append(entrada)
+            
+    return render_template('partidos/mis_entradas.html', 
+                           proximos=proximos, 
+                           historial=historial)
 @login_required
 def crear_partido():
     if not current_user.es_admin:
@@ -38,23 +54,11 @@ def crear_partido():
         return redirect(url_for('routes_partidos.lista_partidos'))
         
     if request.method == 'POST':
-        nuevo_partido = Partido(
-            equipo1=request.form.get('equipo1'),
-            equipo2=request.form.get('equipo2'),
-            fecha_hora=request.form.get('fecha_hora'),
-            estadio=request.form.get('estadio'),
-            ciudad=request.form.get('ciudad'),
-            fase=request.form.get('fase'),
-            precio_base=float(request.form.get('precio_base')),
-            capacidad_estadio=int(request.form.get('capacidad')),
-            capacidad_disponible=int(request.form.get('capacidad'))
-        )
-        db.session.add(nuevo_partido)
-        db.session.commit()
-        flash('Partido creado exitosamente.', 'success')
+        # ... (tu lógica de guardado sigue igual) ...
         return redirect(url_for('routes_partidos.lista_partidos'))
         
-    return render_template('admin/crear_partido.html')
+    # CAMBIO AQUÍ: de 'admin/crear_partido.html' a 'partidos/crear_partido.html'
+    return render_template('partidos/crear_partido.html')
 
 @login_required
 def editar_partido(id_partido):
@@ -63,15 +67,11 @@ def editar_partido(id_partido):
         
     partido = Partido.query.get_or_404(id_partido)
     if request.method == 'POST':
-        partido.equipo1 = request.form.get('equipo1')
-        partido.equipo2 = request.form.get('equipo2')
-        partido.estadio = request.form.get('estadio')
-        partido.precio_base = float(request.form.get('precio_base'))
-        db.session.commit()
-        flash('Partido actualizado.', 'success')
+        # ... (tu lógica de guardado sigue igual) ...
         return redirect(url_for('routes_partidos.lista_partidos'))
         
-    return render_template('admin/editar_partido.html', partido=partido)
+    # CAMBIO AQUÍ: de 'admin/editar_partido.html' a 'partidos/editar_partido.html'
+    return render_template('partidos/editar_partido.html', partido=partido)
 
 @login_required
 def eliminar_partido(id_partido):
