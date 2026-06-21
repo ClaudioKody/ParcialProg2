@@ -7,7 +7,7 @@ routes_auth = Blueprint ('routes_auth', __name__)
 @routes_auth.route('/')
 def index_auth():
     
-    return render_template('index_auth.html')
+    return render_template('index_auth.html', current_user=None)
 
 @routes_auth.route('/login', methods=['GET', 'POST'])
 def login():

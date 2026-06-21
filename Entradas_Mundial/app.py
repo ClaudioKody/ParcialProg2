@@ -1,24 +1,39 @@
 from flask import Flask, redirect, url_for
 from Entradas_Mundial.config import Config
 from Entradas_Mundial.models import db
+from flask_login import LoginManager
 
 app = Flask(__name__)
 app.config.from_object(Config)
 
-
 app.secret_key = 'clave_secreta_mundial_2026'
-
 
 db.init_app(app)
 
+# ==================== CONFIGURACIÓN DE FLASK-LOGIN ====================
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'routes_auth.index_auth'  # Redirige acá si no inició sesión
 
+# Importaciones de modelos
 from Entradas_Mundial.models.model_usuarios import UsuarioBase, UsuarioCliente, Administrador 
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
 from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa
 
+# ==================== CARGADOR DE USUARIOS ====================
+# Esta función le dice a Flask-Login cómo buscar al usuario activo en la base de datos
+@login_manager.user_loader
+def load_user(user_id):
+    return UsuarioBase.query.get(int(user_id))
 
+# Esta función le dice a Flask-Login cómo buscar al usuario en la base de datos
+@login_manager.user_loader
+def load_user(user_id):
+    return UsuarioBase.query.get(int(user_id))
+
+# ==================== IMPORTACIÓN DE CONTROLADORES DE RUTA ====================
 from Entradas_Mundial.routes.routes_auth import routes_auth
 from Entradas_Mundial.routes.lista_partidos import routes_partidos
 from Entradas_Mundial.routes.routes_compras import routes_compras
