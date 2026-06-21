@@ -23,32 +23,46 @@
         </div>
     </div>
 
-    <div class="matches-section-header">
+    <div class="matches-section-header" style="display: flex; justify-content: space-between; align-items: center;">
         <h3>Listado de Partidos Habilitados</h3>
-        <button class="btn-buy-ticket" style="background-color: #28a745;"><i class="fa-solid fa-plus"></i> Agregar Nuevo Partido</button>
+        <a href="{{ url_for('routes_partidos.crear_partido') }}" class="btn-buy-ticket" style="background-color: #28a745; text-decoration: none; padding: 10px 20px; color: white; border-radius: 5px; display: inline-block;">
+            <i class="fa-solid fa-plus"></i> Agregar Nuevo Partido
+        </a>
     </div>
 
     <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white;">
         <thead>
             <tr style="background: #003399; color: white; text-align: left;">
-                <th style="padding: 12px;">Partido</th>
-                <th style="padding: 12px;">Fecha y Hora</th>
-                <th style="padding: 12px;">Estadio</th>
-                <th style="padding: 12px;">Acciones</th>
+                <th style="padding: 12px; width: 35%;">Partido</th>
+                <th style="padding: 12px; width: 20%;">Fecha y Hora</th>
+                <th style="padding: 12px; width: 25%;">Estadio</th>
+                <th style="padding: 12px; width: 20%;">Acciones</th>
             </tr>
         </thead>
         <tbody>
+            {% for p in partidos %}
             <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #ddd;">🇦🇷 Argentina vs Colombia 🇨🇴</td>
-                <td style="padding: 12px; border-bottom: 1px solid #ddd;">11 Jun 2026 - 18:00 hs</td>
-                <td style="padding: 12px; border-bottom: 1px solid #ddd;">MetLife Stadium</td>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd; word-wrap: break-word;">{{ p.equipo1 }} vs {{ p.equipo2 }}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ p.fecha_hora }}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd; word-wrap: break-word;">{{ p.estadio }}</td>
                 <td style="padding: 12px; border-bottom: 1px solid #ddd;">
-                    <button style="background: none; border: none; color: #003399; cursor: pointer;"><i class="fa-solid fa-pen-to-square"></i> Editar</button>
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <a href="{{ url_for('routes_partidos.editar_partido', id_partido=p.id) }}" 
+                           style="text-decoration: none; color: #003399; font-weight: bold; font-size: 0.9em;">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar
+                        </a>
+                        <span style="color: #ccc;">|</span>
+                        <a href="{{ url_for('routes_partidos.eliminar_partido', id_partido=p.id) }}" 
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este partido?');"
+                           style="text-decoration: none; color: #dc3545; font-weight: bold; font-size: 0.9em;">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </a>
+                    </div>
                 </td>
             </tr>
+            {% endfor %}
         </tbody>
     </table>
-
     {% else %}
     {# Vista para clientes normales #}
     <p class="dashboard-subtitle">Seleccioná el partido que querés ver</p>
@@ -67,20 +81,17 @@
     </div>
 
     <div class="matches-grid">
+        {% for p in partidos %}
         <div class="match-card">
-            <p class="match-group-title">Fase de Grupos - Grupo A</p>
+            <p class="match-group-title">{{ p.fase }}</p>
             <div class="teams-versus-display">
-                <div class="team-block"><span>🇦🇷</span><span class="team-name">Argentina</span></div>
+                <div class="team-block"><span class="team-name">{{ p.equipo1 }}</span></div>
                 <div class="vs-divider">VS</div>
-                <div class="team-block"><span>🇨🇴</span><span class="team-name">Colombia</span></div>
-            </div>
-            <div class="match-details-info">
-                <p><i class="fa-regular fa-calendar"></i> Martes, 11 de junio de 2026</p>
-                <p class="match-time">18:00 hs</p>
-                <p><i class="fa-solid fa-location-dot"></i> MetLife Stadium, USA</p>
+                <div class="team-block"><span class="team-name">{{ p.equipo2 }}</span></div>
             </div>
             <button class="btn-buy-ticket"><i class="fa-solid fa-ticket"></i> Comprar entrada</button>
         </div>
+        {% endfor %}
     </div>
     {% endif %}
 
