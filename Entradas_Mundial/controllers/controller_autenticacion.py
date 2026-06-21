@@ -15,21 +15,16 @@ def login_usuario():
 
         if es_admin:
             dni = request.form.get('dni')
-            
-            # Usamos _password para consultar directamente a la base de datos respetando el encapsulamiento
             admin = Administrador.query.filter_by(email=email, _password=password, dni=dni, rol='administrador').first()
-            
             if admin:
                 login_user(admin)
                 flash('¡Bienvenido Administrador!', 'success')
                 return redirect(url_for('routes_partidos.lista_partidos'))
             else:
-                flash('Error: Credenciales de administrador incorrectas o DNI no válido.', 'danger')
+                flash('Error: Credenciales de administrador incorrectas.', 'danger')
                 return redirect(url_for('routes_auth.login'))
         else:
-            # Usamos _password para consultar directamente a la base de datos
             usuario = UsuarioCliente.query.filter_by(email=email, _password=password, rol='cliente').first()
-            
             if usuario:
                 login_user(usuario)
                 return redirect(url_for('routes_partidos.lista_partidos'))
@@ -37,7 +32,8 @@ def login_usuario():
                 flash('Error: Usuario o contraseña incorrectos.', 'danger')
                 return redirect(url_for('routes_auth.login'))
 
-    return render_template('autenticacion/registro.html')
+    # CORRECCIÓN: Apuntamos al archivo correcto (asegurate que exista en /templates)
+    return render_template('login.html')
 
 def registro_usuario():
     if request.method == 'POST':
@@ -52,11 +48,8 @@ def registro_usuario():
             return redirect(url_for('routes_auth.registro'))
 
         nuevo_cliente = UsuarioCliente(
-            nombre=nombre,
-            apellido=apellido,
-            email=email,
-            password=password, # Pasa por tu validación @password.setter
-            rol='cliente',
+            nombre=nombre, apellido=apellido, email=email,
+            password=password, rol='cliente',
             tarjeta_credito_asociada=tarjeta_preferida
         )
         db.session.add(nuevo_cliente)
@@ -64,10 +57,11 @@ def registro_usuario():
         flash('Registro exitoso. Ya podés iniciar sesión.', 'success')
         return redirect(url_for('routes_auth.login'))
 
-    return render_template('autenticacion/registro.html')
+    # CORRECCIÓN: Apuntamos al archivo correcto
+    return render_template('registro.html')
 
 def logout_usuario():
-    logout_user() # Flask-Login destruye la sesión de forma segura
+    logout_user()
     flash('Sesión cerrada correctamente.', 'info')
     return redirect(url_for('routes_auth.login'))
 
@@ -75,18 +69,15 @@ def recuperar_password():
     if request.method == 'POST':
         email = request.form.get('email')
         nueva_password = request.form.get('nueva_password')
-        
         usuario = UsuarioBase.query.filter_by(email=email).first()
         if usuario:
-            usuario.password = nueva_password # Pasa por la validación de tu setter
+            usuario.password = nueva_password
             db.session.commit()
-            flash('¡Contraseña restablecida con éxito! Ya podés iniciar sesión.', 'success')
+            flash('¡Contraseña restablecida!', 'success')
             return redirect(url_for('routes_auth.login'))
         else:
-            flash('El correo ingresado no corresponde a ningún usuario registrado.', 'danger')
+            flash('Correo no registrado.', 'danger')
             
-    return render_template('autenticacion/recuperar_password.html')
+    return render_template('recuperar_password.html')
 
-# TRUCO: Asignamos tu nombre de decorador al decorador oficial de Flask-Login.
-# Así no tenés que cambiar las importaciones en tus archivos de rutas.
 login_requerido = login_required
