@@ -6,5 +6,4 @@ routes_ayuda = Blueprint('routes_ayuda', __name__)
 @routes_ayuda.route('/ayuda')
 @login_requerido
 def ayuda():
-    
     return render_template('ayuda.html')

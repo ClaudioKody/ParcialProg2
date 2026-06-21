@@ -11,20 +11,17 @@ class Entrada(db.Model):
     nacionalidad_asistente = db.Column(db.String(50), nullable=False)
     categoria_asiento = db.Column(db.String(20), nullable=False)
     numero_asiento = db.Column(db.String(10), nullable=False)
-    codigo_qr = db.Column(db.String(100), unique=True, nullable=False)
+    codigo_acceso = db.Column(db.String(50), unique=True, nullable=False) # Renombrado para consistencia con tu controlador
     
-
     compra_id = db.Column(db.Integer, db.ForeignKey('compras.id'), nullable=False) 
     partido_id = db.Column(db.Integer, db.ForeignKey('partidos.id'), nullable=False)
     
     def registrar_asistente(self):
-        print(f"Registrando asistente: {self.nombre_asistente} {self.apellido_asistente}")
         pass
     
-    def generar_codigo_qr(self):
+    def generar_codigo_acceso(self):
+        import uuid
+        return str(uuid.uuid4()).upper()[:10]
+    
+    def enviar_email_confirmacion(self):
         pass
-    
-    def enviar_email_correo(self):
-        pass
-    
-    

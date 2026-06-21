@@ -6,5 +6,5 @@ routes_turismo = Blueprint('routes_turismo', __name__)
 
 @routes_turismo.route('/turismo/recomendaciones')
 @login_requerido
-def ver_turismo():
+def listar_actividades():
     return controller_turismo.mostrar_actividades_sede()
