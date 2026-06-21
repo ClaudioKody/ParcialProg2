@@ -8,18 +8,19 @@ class Compra(db.Model):
     fecha_compra = db.Column(db.DateTime, default=datetime.utcnow) 
     total_pagado = db.Column(db.Float, nullable=False)
     metodo_pago = db.Column(db.String(50), nullable=False)
-    estado_pago = db.Column(db.String(20), nullable=False)
-    
+    estado_pago = db.Column(db.String(20), default='pendiente', nullable=False)
     
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios_cliente.id'), nullable=False) 
     
-    entradas_asociadas = db.relationship('Entrada', backref='compra', lazy=True) 
+    # Relación corregida para asegurar borrado en cascada
+    entradas_asociadas = db.relationship('Entrada', backref='compra_rel', lazy=True, cascade="all, delete-orphan") 
     
     def crear_transaccion(self):
         pass
     
     def calcular_total(self):
-        pass
+        return sum(entrada.precio for entrada in self.entradas_asociadas)
     
     def procesar_pago(self):
-        pass
+        self.estado_pago = 'completado'
+        db.session.commit()

@@ -7,6 +7,7 @@ class ActividadTuristica(db.Model):
     nombre = db.Column(db.String(70), nullable=False)
     descripcion = db.Column(db.Text, nullable=False)
     ciudad = db.Column(db.String(50), nullable=False)
+    ubicacion = db.Column(db.String(100), nullable=False) # Agregado para coincidir con tu controlador
     precio_sugerido = db.Column(db.Float, nullable=True)
     imagen_url = db.Column(db.String(200), nullable=True)
     tipo_actividad = db.Column(db.String(50), nullable=False)
@@ -15,8 +16,11 @@ class ActividadTuristica(db.Model):
         'polymorphic_on': tipo_actividad
     }
 
-    def info_general_evento(self):
-        pass
+    @property
+    def tipo_legible(self):
+        if self.tipo_actividad == 'concierto':
+            return "Concierto Musical"
+        return "Actividad Recreativa"
     
     def mostrar_recomendacion(self):
         return f"Recomendacion general para {self.ciudad}"
@@ -48,4 +52,3 @@ class ActividadRecreativa(ActividadTuristica):
 
     def mostrar_recomendacion(self):
         return f"Visita este lugar en {self.direccion_establecimiento}. Horarios: {self.horarios_disponibles}"
-    

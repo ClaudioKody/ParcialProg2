@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Partido - FIFA 2026{% endblock %}
+
+{% block section_title %}Editar Partido{% endblock %}
+
+{% block content %}
+<div class="dashboard-matches-container">
+    <div class="matches-section-header">
+        <h3>Editando: {{ partido.pais_local }} vs {{ partido.pais_visitante }}</h3>
+    </div>
+
+    <form action="{{ url_for('routes_partidos.editar_partido', id_partido=partido.id) }}" method="POST" style="background: white; padding: 20px; border-radius: 8px; border: 1px solid #ddd;">
+        <label>País Local:</label>
+        <input type="text" name="pais_local" value="{{ partido.pais_local }}" required class="matches-filter-select" style="width: 100%; margin-bottom: 15px; padding: 10px;">
+        
+        <label>País Visitante:</label>
+        <input type="text" name="pais_visitante" value="{{ partido.pais_visitante }}" required class="matches-filter-select" style="width: 100%; margin-bottom: 15px; padding: 10px;">
+        
+        <label>Estadio:</label>
+        <input type="text" name="estadio" value="{{ partido.estadio }}" required class="matches-filter-select" style="width: 100%; margin-bottom: 15px; padding: 10px;">
+        
+        <label>Precio Base (USD):</label>
+        <input type="number" step="0.01" name="precio_base" value="{{ partido.precio_base }}" required class="matches-filter-select" style="width: 100%; margin-bottom: 15px; padding: 10px;">
+        
+        <div style="margin-top: 20px;">
+            <button type="submit" class="btn-buy-ticket" style="cursor: pointer;">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+            </button>
+            <a href="{{ url_for('routes_partidos.lista_partidos') }}" style="margin-left: 15px; color: #003399; text-decoration: none;">Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

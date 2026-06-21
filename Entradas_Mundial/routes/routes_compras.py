@@ -7,26 +7,20 @@ routes_compras = Blueprint('routes_compras', __name__)
 @routes_compras.route('/compra/asientos/<int:id_partido>', methods=['GET', 'POST'])
 @login_requerido
 def seleccionar_asientos(id_partido):
-    
-    return controller_compras.procesar_seleccion_asientos(id_partido)
+    # Llama a la función integrada que procesa el POST y renderiza
+    return controller_compras.procesar_compra_pasos(id_partido)
 
 @routes_compras.route('/compra/datos', methods=['GET', 'POST'])
 @login_requerido
 def datos_comprador():
-    
     return controller_compras.procesar_datos_comprador()
 
 @routes_compras.route('/compra/pago', methods=['GET', 'POST'])
 @login_requerido
 def pago():
-    
     return controller_compras.procesar_pago_tarjeta()
 
 @routes_compras.route('/compra/confirmacion')
 @login_requerido
 def confirmacion():
-    
     return controller_compras.mostrar_confirmacion()
-
-
-

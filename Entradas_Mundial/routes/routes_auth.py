@@ -1,13 +1,12 @@
 from flask import Blueprint, render_template
 from Entradas_Mundial.controllers import controller_autenticacion
 
-
-routes_auth = Blueprint ('routes_auth', __name__)
+routes_auth = Blueprint('routes_auth', __name__)
 
 @routes_auth.route('/')
 def index_auth():
-    
-    return render_template('index_auth.html', current_user=None)
+    ## Cambio de ruta: carpeta auth/
+    return render_template('auth/index_auth.html')
 
 @routes_auth.route('/login', methods=['GET', 'POST'])
 def login():

@@ -3,8 +3,11 @@ from flask_login import login_user, logout_user, login_required, current_user
 from Entradas_Mundial.models import db
 from Entradas_Mundial.models.model_usuarios import UsuarioCliente, Administrador, UsuarioBase
 
+def index_auth():
+    # RUTA ACTUALIZADA: Carpeta auth/
+    return render_template('auth/index_auth.html')
+
 def login_usuario():
-    # Si el usuario ya inició sesión, lo redirigimos directo a los partidos
     if current_user.is_authenticated:
         return redirect(url_for('routes_partidos.lista_partidos'))
 
@@ -32,8 +35,8 @@ def login_usuario():
                 flash('Error: Usuario o contraseña incorrectos.', 'danger')
                 return redirect(url_for('routes_auth.login'))
 
-    # CORRECCIÓN: Apuntamos al archivo correcto (asegurate que exista en /templates)
-    return render_template('login.html')
+    # RUTA ACTUALIZADA: Carpeta auth/
+    return render_template('auth/login.html')
 
 def registro_usuario():
     if request.method == 'POST':
@@ -57,8 +60,8 @@ def registro_usuario():
         flash('Registro exitoso. Ya podés iniciar sesión.', 'success')
         return redirect(url_for('routes_auth.login'))
 
-    # CORRECCIÓN: Apuntamos al archivo correcto
-    return render_template('registro.html')
+    # RUTA ACTUALIZADA: Carpeta auth/
+    return render_template('auth/registro.html')
 
 def logout_usuario():
     logout_user()
@@ -78,6 +81,7 @@ def recuperar_password():
         else:
             flash('Correo no registrado.', 'danger')
             
-    return render_template('recuperar_password.html')
+    # RUTA ACTUALIZADA: Carpeta auth/
+    return render_template('auth/recuperar_password.html')
 
 login_requerido = login_required
