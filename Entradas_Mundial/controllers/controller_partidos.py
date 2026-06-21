@@ -19,10 +19,10 @@ def listar_partidos_cliente():
         
     partidos = partidos_query.all()
     
-    # CORREGIDO: Apunta a la ruta de la subcarpeta 'partidos/'
+    
     return render_template('partidos/lista_partidos.html', partidos=partidos)
 
-# NUEVA FUNCIÓN AGREGADA: Controla la sección de Mis Entradas desde el Menú Lateral
+
 def mostrar_mis_entradas():
     return render_template('partidos/mis_entradas.html')
 

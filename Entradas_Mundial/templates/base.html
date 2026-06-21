@@ -10,22 +10,22 @@
 <body>
 
     <div class="app-container">
-        <!-- BARRA LATERAL IZQUIERDA -->
+        
         <aside class="sidebar">
             <div class="sidebar-brand">
                 <div class="brand-logo">FIFA</div>
                 <div class="brand-year">2026</div>
             </div>
             
-            <!-- MENÚ ADAPTATIVO SEGÚN EL ROL -->
+            
             <nav class="sidebar-menu">
-                <!-- SI ES ADMINISTRADOR -->
+                
                 {% if current_user.es_admin %}
                     <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-chart-line"></i> Panel Admin</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-plus"></i> Cargar Partidos</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-users"></i> Gestionar Usuarios</a>
                 
-                <!-- SI ES UN USUARIO/CLIENTE COMÚN -->
+                
                 {% else %}
                     <a href="{{ url_for('routes_partidos.lista_partidos') }}" class="menu-item"><i class="fa-solid fa-calendar-days"></i> Partidos</a>
                     <a href="#" class="menu-item"><i class="fa-solid fa-ticket"></i> Mis Entradas</a>
@@ -35,22 +35,21 @@
                 {% endif %}
             </nav>
 
-            <div class="sidebar-footer">
-                <a href="{{ url_for('routes_auth.login') }}" class="menu-item logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
-            </div>
-        </aside>
+                <div class="sidebar-footer">
+                    <a href="{{ url_for('routes_auth.logout') }}" class="menu-item logout"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a>
+                </div>
+            </aside>
 
-        <!-- CONTENEDOR DERECHO PRINCIPAL -->
-        <div class="main-layout">
-            <header class="top-bar">
-                <div class="page-context">
-                    <h2>{% block section_title %}Entradas del Mundial 2026{% endblock %}</h2>
-                </div>
-                <div class="user-profile-nav">
-                    <i class="fa-solid fa-circle-user"></i>
-                    <span>Hola, {{ current_user.nombre if current_user else 'Juan' }}</span>
-                </div>
-            </header>
+            <div class="main-layout">
+                <header class="top-bar">
+                    <div class="page-context">
+                        <h2>{% block section_title %}Entradas del Mundial 2026{% endblock %}</h2>
+                    </div>
+                    <div class="user-profile-nav">
+                        <i class="fa-solid fa-circle-user"></i>
+                        <span>Hola, {{ current_user.nombre }}</span>
+                    </div>
+                </header>
 
             <main class="content-wrapper">
                 {% block content %}
