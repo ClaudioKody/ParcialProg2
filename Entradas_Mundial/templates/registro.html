@@ -1,50 +1,39 @@
 {% extends 'base.html' %}
-##commit##
-{% block title %}Iniciar Sesión - FIFA 2026{% endblock %}
+
+{% block title %}Registro - FIFA 2026{% endblock %}
 
 {% block content %}
-<div class="auth-page-layout">
-    <div class="auth-card-box">
-        <div class="auth-card-header">
-            <div class="mini-logo">FIFA 2026</div>
-            <div class="mini-title">
-                <h3>ENTRADAS DEL</h3>
-                <h2>MUNDIAL 2026</h2>
-                <p>TU LUGAR EN LA HISTORIA</p>
-            </div>
+<div class="auth-bg-wrapper">
+    <div class="auth-card">
+        <div class="auth-tabs">
+            <a href="{{ url_for('routes_auth.login') }}" class="auth-tab-btn" style="text-align: center; text-decoration: none; background: #e9ecef;">
+                <i class="fa-solid fa-right-to-bracket"></i> INICIAR SESIÓN
+            </a>
+            <a href="{{ url_for('routes_auth.registro') }}" class="auth-tab-btn active" style="text-align: center; text-decoration: none;">
+                <i class="fa-solid fa-user-plus"></i> REGISTRARSE
+            </a>
         </div>
 
-        <div class="auth-card-body">
-            <h3>Iniciar sesión</h3>
+        <div class="auth-body">
+            <h3 style="color: var(--azul-fifa-oscuro); font-weight: 700; margin-bottom: 20px; text-align: center;">Crear Cuenta</h3>
             
             <form action="{{ url_for('routes_auth.registro') }}" method="POST">
-                <div class="input-field-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" id="nombre" name="nombre" placeholder="Ingresa tu nombre" required>
+                <div class="form-group mb-3">
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="text" name="apellido" class="form-control" placeholder="Apellido" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
                 </div>
 
-                <div class="input-field-group">
-                    <label for="apellido">Apellido</label>
-                    <input type="text" id="apellido" name="apellido" placeholder="Ingresa tu apellido" required>
-                </div>
-
-                <div class="input-field-group">
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" name="email" placeholder="Ingresa tu correo electrónico" required>
-                </div>
-
-                <div class="input-field-group checkbox-field">
-                    <input type="checkbox" id="es_admin" name="es_admin" onchange="toggleDniField()">
-                    <label for="es_admin">¿Sos admin?</label>
-                </div>
-                <p class="checkbox-help-text">Si marcás esta opción, deberás ingresar tu DNI para verificar tu rol de administrador.</p>
-
-                <div class="input-field-group" id="container_dni" style="display: none;">
-                    <label for="dni">DNI</label>
-                    <input type="text" id="dni" name="dni" placeholder="Ingresa tu DNI">
-                </div>
-
-                <button type="submit" class="btn-submit-auth">INICIAR SESIÓN</button>
+                <button type="submit" class="btn-buy-ticket" style="width: 100%; padding: 12px; border: none; cursor: pointer; margin-top: 10px;">
+                    Registrarse
+                </button>
             </form>
 
             <div class="auth-card-footer">
@@ -53,21 +42,4 @@
         </div>
     </div>
 </div>
-
-<script>
-function toggleDniField() {
-    var checkAdmin = document.getElementById('es_admin');
-    var blockDni = document.getElementById('container_dni');
-    var fieldDni = document.getElementById('dni');
-    
-    if (checkAdmin.checked) {
-        blockDni.style.display = 'block';
-        fieldDni.required = true;
-    } else {
-        blockDni.style.display = 'none';
-        fieldDni.required = false;
-        fieldDni.value = '';
-    }
-}
-</script>
 {% endblock %}
