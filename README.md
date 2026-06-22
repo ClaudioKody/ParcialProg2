@@ -106,17 +106,6 @@ Al iniciar por primera vez, el sistema creará automáticamente todas las tablas
 * Tomás Naveda          (Rama Shelby)
 
 ---
-
-## Criterios de Evaluación Cubiertos
-* Registro, Login y Logout (15%) 
-* Página protegida (10%) 
-* Funcionalidad del módulo asignado (25%) 
-* Aplicación de POO (20%) 
-* Diseño y uso de Bootstrap (10%) 
-* Uso de Git y GitHub (10%) 
-* Documentación y UML (10%)
-
----
 **Fecha de Entrega:** 22/06/2026  
 **Docente:** Cristian Pietrobon  
 **Institución:** IES 9-023 
