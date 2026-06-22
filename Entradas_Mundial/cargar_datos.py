@@ -4,7 +4,7 @@ from Entradas_Mundial.models import db
 from Entradas_Mundial.models.model_partido import Partido
 
 def cargar_fixture_mundial_completo():
-    print("⏳ Iniciando la carga del FIXTURE ADAPTADO AL MODELO (104 Partidos)...")
+    print("Iniciando la carga del FIXTURE ADAPTADO AL MODELO (104 Partidos)...")
     
     # Grupos oficiales de la FIFA
     grupos = {
