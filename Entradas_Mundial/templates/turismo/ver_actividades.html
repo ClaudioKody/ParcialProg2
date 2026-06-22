@@ -8,71 +8,64 @@
     <p class="tourism-subtitle">Descubrí actividades y experiencias para disfrutar tu estadía durante el Mundial.</p>
 
     <div class="tourism-tabs">
-        <button class="tab-btn active" onclick="cambiarTab('conciertos')">Conciertos</button>
-        <button class="tab-btn" onclick="cambiarTab('recreativas')">Actividades recreativas</button>
+        <!-- FIX: se pasa el evento como parámetro para que funcione el classList.add -->
+        <button class="tab-btn active" onclick="cambiarTab(event, 'conciertos')">Conciertos</button>
+        <button class="tab-btn" onclick="cambiarTab(event, 'recreativas')">Actividades recreativas</button>
     </div>
 
+    <!-- SECCIÓN CONCIERTOS: ahora usa datos reales del modelo -->
     <div id="sector-conciertos" class="tourism-section">
-        <h3>Conciertos en Nueva Jersey</h3>
+        <h3>Conciertos en {{ ciudad }}</h3>
         <div class="cards-grid">
+            {% for c in conciertos %}
             <div class="activity-card">
-                <div class="card-date">JUN 10</div>
-                <h4>Imagine Dragons</h4>
-                <p class="place">Prudential Center, Newark, NJ</p>
-                <p class="time">20:00 HS</p>
-                <button class="btn-details">Ver detalles</button>
+                <div class="card-date">{{ c.fecha.strftime('%b %d').upper() if c.fecha else '' }}</div>
+                <h4>{{ c.artista }}</h4>
+                <p class="place">{{ c.estadio_recital }}, {{ c.ubicacion }}</p>
+                <p class="time">{{ c.hora if c.hora else '' }}</p>
+                <!-- FIX: el botón ahora navega a la ruta de detalle -->
+                <a href="{{ url_for('routes_turismo.detalle_actividad', id=c.id) }}" class="btn-details">Ver detalles</a>
             </div>
-            <div class="activity-card">
-                <div class="card-date">JUN 12</div>
-                <h4>The Weeknd</h4>
-                <p class="place">MetLife Stadium, East Rutherford, NJ</p>
-                <p class="time">21:00 HS</p>
-                <button class="btn-details">Ver detalles</button>
-            </div>
-            <div class="activity-card">
-                <div class="card-date">JUN 13</div>
-                <h4>Coldplay</h4>
-                <p class="place">MetLife Stadium, East Rutherford, NJ</p>
-                <p class="time">20:00 HS</p>
-                <button class="btn-details">Ver detalles</button>
-            </div>
+            {% else %}
+            <p style="color: #888;">No hay conciertos disponibles para esta sede.</p>
+            {% endfor %}
         </div>
     </div>
 
+    <!-- SECCIÓN RECREATIVAS: ahora usa datos reales del modelo -->
     <div id="sector-recreativas" class="tourism-section" style="display: none;">
-        <h3>Actividades recreativas en Nueva Jersey</h3>
+        <h3>Actividades recreativas en {{ ciudad }}</h3>
         <div class="cards-grid">
+            {% for r in recreaciones %}
             <div class="activity-card">
-                <h4>Cine Hoyts Jersey Gardens</h4>
-                <p class="place">Elizabeth, NJ</p>
-                <p class="desc">Disfrutá los últimos estrenos en salas de alta calidad.</p>
-                <button class="btn-details">Ver detalles</button>
+                <h4>{{ r.nombre }}</h4>
+                <p class="place">{{ r.ubicacion }}</p>
+                <p class="desc">{{ r.descripcion }}</p>
+                <!-- FIX: el botón ahora navega a la ruta de detalle -->
+                <a href="{{ url_for('routes_turismo.detalle_actividad', id=r.id) }}" class="btn-details">Ver detalles</a>
             </div>
-            <div class="activity-card">
-                <h4>Museo de Arte de Newark</h4>
-                <p class="place">Newark, NJ</p>
-                <p class="desc">Arte, cultura e historia en el corazón de la ciudad.</p>
-                <button class="btn-details">Ver detalles</button>
-            </div>
+            {% endfor %}
         </div>
     </div>
 </div>
 
 <script>
-function cambiarTab(tipo) {
-    var btns = document.querySelectorAll('.tab-btn');
-    btns.forEach(b => b.classList.remove('active'));
-    
+// FIX: se recibe 'e' (el evento) para poder agregarle la clase 'active' al botón clickeado
+function cambiarTab(e, tipo) {
+    // Sacar 'active' de todos los botones
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+
+    // Ocultar todas las secciones
     document.getElementById('sector-conciertos').style.display = 'none';
     document.getElementById('sector-recreativas').style.display = 'none';
-    
-    if(tipo === 'conciertos') {
+
+    // Mostrar la sección correcta y marcar el botón como activo
+    if (tipo === 'conciertos') {
         document.getElementById('sector-conciertos').style.display = 'block';
-        event.currentTarget.classList.add('active');
     } else {
         document.getElementById('sector-recreativas').style.display = 'block';
-        event.currentTarget.classList.add('active');
     }
+    e.currentTarget.classList.add('active');
 }
 </script>
 {% endblock %}

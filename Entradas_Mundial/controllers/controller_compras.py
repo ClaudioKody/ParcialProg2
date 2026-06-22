@@ -17,7 +17,7 @@ def seleccionar_asientos(id_partido):
         categoria = request.form.get('categoria')
         cantidad = request.form.get('cantidad')
         
-        session['pre_compra'] = {
+        session ['pre_compra'] = {
             'id_partido': id_partido,
             'categoria': categoria,
             'cantidad': cantidad
