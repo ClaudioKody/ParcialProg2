@@ -7,8 +7,9 @@
 {% block content %}
 <div class="tourism-container">
     <div class="activity-detail-card" style="background: white; padding: 30px; border-radius: 12px; border: 1px solid #ddd; max-width: 800px; margin: auto;">
-        
+
         <h2 style="color: #003399;">{{ actividad.nombre }}</h2>
+
         <p class="place" style="font-size: 1.2em; font-weight: bold; color: #555;">
             <i class="fa-solid fa-location-dot"></i> {{ actividad.ubicacion }}
         </p>
@@ -16,7 +17,9 @@
         <hr style="margin: 20px 0;">
 
         <h4>Descripción</h4>
-        <p style="line-height: 1.6; color: #333;">{{ actividad.descripcion }}</p>
+        <p style="line-height: 1.6; color: #333;">
+            {{ actividad.descripcion }}
+        </p>
 
         <div class="activity-info" style="margin-top: 20px; background: #f4f4f4; padding: 15px; border-radius: 8px;">
             <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
@@ -24,13 +27,17 @@
         </div>
 
         <div style="margin-top: 30px;">
-            <button class="btn-details" style="background-color: #003399; color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer;">
+            <button class="btn-details"
+                    style="background-color: #003399; color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer;">
                 Reservar Actividad
             </button>
-            <a href="{{ url_for('routes_turismo.listar_actividades') }}" style="margin-left: 15px; color: #003399; text-decoration: none;">
+
+            <a href="{{ url_for('routes_turismo.mostrar_actividades_sede') }}"
+               style="margin-left: 15px; color: #003399; text-decoration: none;">
                 Volver al listado
             </a>
         </div>
+
     </div>
 </div>
 {% endblock %}
