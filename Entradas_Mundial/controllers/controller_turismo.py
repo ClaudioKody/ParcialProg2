@@ -1,4 +1,4 @@
-from flask import render_template, session, abort
+from flask import render_template, session, abort, redirect, url_for, flash
 from Entradas_Mundial.models.model_actividad_turistica import Concierto, ActividadRecreativa, ActividadTuristica
 
 def mostrar_actividades_sede():
@@ -25,3 +25,10 @@ def detalle_actividad(id):
     # Busca en la tabla base (polimórfica), devuelve el objeto real (Concierto o ActividadRecreativa)
     actividad = ActividadTuristica.query.get_or_404(id)
     return render_template('turismo/detalles_actividades.html', actividad=actividad)
+
+def reservar_actividad(id):
+    actividad = ActividadTuristica.query.get_or_404(id)
+
+    flash(f'¡La actividad "{actividad.nombre}" fue reservada con éxito!', 'success')
+
+    return redirect(url_for('routes_turismo.detalle_actividad', id=id))

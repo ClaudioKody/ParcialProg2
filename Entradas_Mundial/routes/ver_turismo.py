@@ -14,3 +14,8 @@ def mostrar_actividades_sede():
 @login_requerido
 def detalle_actividad(id):
     return controller_turismo.detalle_actividad(id)
+
+@routes_turismo.route('/turismo/reservar/<int:id>')
+@login_requerido
+def reservar_actividad(id):
+    return controller_turismo.reservar_actividad(id)

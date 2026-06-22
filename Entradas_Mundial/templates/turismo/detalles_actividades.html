@@ -22,15 +22,15 @@
         </p>
 
         <div class="activity-info" style="margin-top: 20px; background: #f4f4f4; padding: 15px; border-radius: 8px;">
-            <p><strong>Fecha:</strong> {{ actividad.fecha }}</p>
-            <p><strong>Precio:</strong> USD {{ actividad.precio }}</p>
+            <p><strong>Precio:</strong> USD {{ actividad.precio_sugerido }}</p>
         </div>
 
         <div style="margin-top: 30px;">
-            <button class="btn-details"
-                    style="background-color: #003399; color: white; padding: 10px 25px; border: none; border-radius: 5px; cursor: pointer;">
-                Reservar Actividad
-            </button>
+          <a href="{{ url_for('routes_turismo.reservar_actividad', id=actividad.id) }}"
+   class="btn-details"
+   style="background-color: #003399; color: white; padding: 10px 25px; border-radius: 5px; color: white; text-decoration: none;">
+    Reservar Actividad
+</a>
 
             <a href="{{ url_for('routes_turismo.mostrar_actividades_sede') }}"
                style="margin-left: 15px; color: #003399; text-decoration: none;">
