@@ -2,10 +2,8 @@ from flask import Blueprint, request, redirect, url_for, flash, render_template
 from flask_login import login_required, current_user
 from Entradas_Mundial.controllers import controller_autenticacion
 
-# Creamos el Blueprint
 routes_auth = Blueprint('routes_auth', __name__)
 
-# --- Rutas de Autenticación ---
 
 @routes_auth.route('/')
 def index_auth():
@@ -27,7 +25,6 @@ def logout():
 def recuperar_password():
     return controller_autenticacion.recuperar_password()
 
-# --- Rutas de Perfil ---
 
 @routes_auth.route('/perfil')
 @login_required 

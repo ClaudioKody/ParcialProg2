@@ -6,7 +6,6 @@ from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_entradas import Entrada
 from Entradas_Mundial.models.model_compra import Compra
 
-# --- VISTAS DE USUARIO ---
 
 @login_required
 def listar_partidos_cliente():
@@ -26,7 +25,6 @@ def listar_partidos_cliente():
         
     partidos = partidos_query.all()
     
-    # 2. Pasamos 'ahora' al template para hacer la comparación en el HTML
     return render_template(
         'partidos/lista_partidos.html', 
         partidos=partidos, 
@@ -59,10 +57,8 @@ def crear_partido():
         return redirect(url_for('routes_partidos.lista_partidos'))
         
     if request.method == 'POST':
-        # ... (tu lógica de guardado sigue igual) ...
         return redirect(url_for('routes_partidos.lista_partidos'))
         
-    # CAMBIO AQUÍ: de 'admin/crear_partido.html' a 'partidos/crear_partido.html'
     return render_template('admin/crear_partido.html')
 
 @login_required
@@ -72,10 +68,8 @@ def editar_partido(id_partido):
         
     partido = Partido.query.get_or_404(id_partido)
     if request.method == 'POST':
-        # ... (tu lógica de guardado sigue igual) ...
         return redirect(url_for('routes_partidos.lista_partidos'))
         
-    # CAMBIO AQUÍ: de 'admin/editar_partido.html' a 'partidos/editar_partido.html'
     return render_template('partidos/editar_partido.html', partido=partido)
 
 @login_required

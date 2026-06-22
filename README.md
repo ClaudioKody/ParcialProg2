@@ -100,10 +100,10 @@ Al iniciar por primera vez, el sistema creará automáticamente todas las tablas
 ---
 
 ## Integrantes del Equipo
-* Claudio Pérez
-* Priscila Toledano
-* Selene Quintero
-* Tomás Naveda
+* Claudio Pérez         (Rama Kody)
+* Priscila Toledano     (Rama priscila)
+* Selene Quintero       (Rama Selene)
+* Tomás Naveda          (Rama Shelby)
 
 ---
 

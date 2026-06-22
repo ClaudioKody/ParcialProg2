@@ -7,7 +7,7 @@ class ActividadTuristica(db.Model):
     nombre = db.Column(db.String(70), nullable=False)
     descripcion = db.Column(db.Text, nullable=False)
     ciudad = db.Column(db.String(50), nullable=False)
-    ubicacion = db.Column(db.String(100), nullable=False) # Agregado para coincidir con tu controlador
+    ubicacion = db.Column(db.String(100), nullable=False) 
     precio_sugerido = db.Column(db.Float, nullable=True)
     imagen_url = db.Column(db.String(200), nullable=True)
     tipo_actividad = db.Column(db.String(50), nullable=False)

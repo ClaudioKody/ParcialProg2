@@ -12,10 +12,8 @@ def login_usuario():
 
         usuario = UsuarioBase.query.filter_by(email=email).first()
 
-        # 1. Validar si el usuario existe y la contraseña es correcta
         if usuario and check_password_hash(usuario.password, password):
             
-            # 2. Lógica para ADMINISTRADOR
             if es_admin:
                 if usuario.rol == 'administrador':
                     dni_ingresado = request.form.get('dni')
@@ -31,7 +29,6 @@ def login_usuario():
                     flash('Este usuario no tiene rol de administrador.', 'danger')
                     return redirect(url_for('routes_auth.login'))
 
-            # 3. Lógica para CLIENTE
             else:
                 if usuario.rol == 'cliente':
                     login_user(usuario)
@@ -40,7 +37,6 @@ def login_usuario():
                     flash('Rol de usuario inválido para acceso cliente.', 'danger')
                     return redirect(url_for('routes_auth.login'))
 
-        # Si el usuario no existe o la contraseña es incorrecta
         flash('Credenciales incorrectas.', 'danger')
         return redirect(url_for('routes_auth.login')) 
 

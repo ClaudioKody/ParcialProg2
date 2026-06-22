@@ -12,7 +12,6 @@ class Compra(db.Model):
     
     usuario_id = db.Column(db.Integer, db.ForeignKey('usuarios_cliente.id'), nullable=False) 
     
-    # Relación corregida para asegurar borrado en cascada
     entradas_asociadas = db.relationship('Entrada', backref='compra_rel', lazy=True, cascade="all, delete-orphan") 
     
     def crear_transaccion(self):

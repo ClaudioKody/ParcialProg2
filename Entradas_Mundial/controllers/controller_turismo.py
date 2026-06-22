@@ -9,7 +9,6 @@ def mostrar_actividades_sede():
         
     ciudad_sede = datos_ticket['ciudad']
 
-    # Filtramos por ciudad (no por ubicacion, que es el nombre del estadio/lugar)
     conciertos_locales = Concierto.query.filter_by(ciudad=ciudad_sede).all()
     recreaciones_locales = ActividadRecreativa.query.filter_by(ciudad=ciudad_sede).all()
     
@@ -20,9 +19,7 @@ def mostrar_actividades_sede():
         recreaciones=recreaciones_locales
     )
 
-# NUEVO: función para mostrar el detalle de una actividad por su id
 def detalle_actividad(id):
-    # Busca en la tabla base (polimórfica), devuelve el objeto real (Concierto o ActividadRecreativa)
     actividad = ActividadTuristica.query.get_or_404(id)
     return render_template('turismo/detalles_actividades.html', actividad=actividad)
 

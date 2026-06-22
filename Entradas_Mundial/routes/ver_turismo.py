@@ -9,7 +9,6 @@ routes_turismo = Blueprint('routes_turismo', __name__)
 def mostrar_actividades_sede():
     return controller_turismo.mostrar_actividades_sede()
 
-# NUEVO: ruta para el detalle de cada actividad
 @routes_turismo.route('/turismo/detalle/<int:id>')
 @login_requerido
 def detalle_actividad(id):

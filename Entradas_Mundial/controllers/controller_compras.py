@@ -13,7 +13,6 @@ from Entradas_Mundial.models.model_entradas import Entrada
 def seleccionar_asientos(id_partido):
     partido = Partido.query.get_or_404(id_partido)
     if request.method == 'POST':
-        # Mantenemos tu lógica de captura de selección
         categoria = request.form.get('categoria')
         cantidad = request.form.get('cantidad')
         
@@ -28,7 +27,6 @@ def seleccionar_asientos(id_partido):
 
 @login_required
 def datos_comprador():
-    # Recuperamos la validación de sesión que tenías
     if 'pre_compra' not in session:
         flash("Por favor, selecciona los asientos primero.", "warning")
         return redirect(url_for('routes_partidos.lista_partidos'))
@@ -42,7 +40,6 @@ def procesar_compra_final():
         
     partido = Partido.query.get_or_404(pre_compra['id_partido'])
     
-    # Recuperamos la captura completa de datos que tenías
     nombre = request.form.get('nombre')
     apellido = request.form.get('apellido')
     email = request.form.get('email')
@@ -52,7 +49,6 @@ def procesar_compra_final():
     
     monto_total = partido.precio_base * int(pre_compra['cantidad'])
     
-    # 1. Crear Compra
     nueva_compra = Compra(
         usuario_id=current_user.id,
         total_pagado=monto_total,
@@ -60,9 +56,8 @@ def procesar_compra_final():
         estado_pago="completado"
     )
     db.session.add(nueva_compra)
-    db.session.flush() # Mantenemos el flush para el ID
+    db.session.flush()
 
-    # 2. Crear Entrada
     codigo = str(uuid.uuid4()).upper()[:10]
     nueva_entrada = Entrada(
         nombre_asistente=nombre,
@@ -81,7 +76,6 @@ def procesar_compra_final():
     db.session.add(nueva_entrada)
     db.session.commit()
 
-    # Limpiar y guardar éxito
     session.pop('pre_compra', None)
     session['ticket_exitoso'] = {
         'titular': f"{nombre} {apellido}", 

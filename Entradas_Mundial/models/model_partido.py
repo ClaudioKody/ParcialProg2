@@ -14,7 +14,6 @@ class Partido(db.Model):
     fase = db.Column(db.String(50), nullable=False)
     precio_base = db.Column(db.Float, nullable=False)
     
-    # Relación con borrado en cascada
     entradas = db.relationship('Entrada', backref='partido_rel', lazy=True, cascade="all, delete-orphan")
     
     def obtener_detalles(self):

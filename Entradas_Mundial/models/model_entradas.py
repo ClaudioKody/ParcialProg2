@@ -11,7 +11,7 @@ class Entrada(db.Model):
     nacionalidad_asistente = db.Column(db.String(50), nullable=False)
     categoria_asiento = db.Column(db.String(20), nullable=False)
     numero_asiento = db.Column(db.String(10), nullable=False)
-    codigo_acceso = db.Column(db.String(50), unique=True, nullable=False) # Renombrado para consistencia con tu controlador
+    codigo_acceso = db.Column(db.String(50), unique=True, nullable=False) 
     
     compra_id = db.Column(db.Integer, db.ForeignKey('compras.id'), nullable=False) 
     partido_id = db.Column(db.Integer, db.ForeignKey('partidos.id'), nullable=False)

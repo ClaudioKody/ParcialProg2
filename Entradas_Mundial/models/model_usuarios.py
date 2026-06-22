@@ -9,7 +9,7 @@ class UsuarioBase(UserMixin, db.Model):
     apellido = db.Column(db.String(50), nullable=False)
     email = db.Column(db.String(50), unique=True, nullable=False)
     rol = db.Column(db.String(50), nullable=False)
-    _password = db.Column('password', db.String(255), nullable=False) # Aumentado a 255 para hashes
+    _password = db.Column('password', db.String(255), nullable=False) 
     
     __mapper_args__ = {
         'polymorphic_on': rol,
@@ -35,7 +35,6 @@ class UsuarioCliente(UsuarioBase):
     id = db.Column(db.Integer, db.ForeignKey('usuarios.id'), primary_key=True)
     tarjeta_credito_asociada = db.Column(db.String(20), nullable=True)
     
-    # Relación con compras
     compras = db.relationship("Compra", backref="usuario_cliente", lazy=True, cascade="all, delete-orphan")
     
     __mapper_args__ = {'polymorphic_identity': 'cliente'}
