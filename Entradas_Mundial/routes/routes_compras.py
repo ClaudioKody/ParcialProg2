@@ -1,5 +1,5 @@
-from flask import Blueprint , render_template
-from Entradas_Mundial.controllers import controller_compras
+from flask import Blueprint , redirect, url_for
+from Entradas_Mundial.controllers import controller_compras as ctrl 
 from Entradas_Mundial.controllers.controller_autenticacion import login_requerido
 from Entradas_Mundial.models.model_entradas import Entrada
 
@@ -8,27 +8,26 @@ routes_compras = Blueprint('routes_compras', __name__)
 @routes_compras.route('/compra/asientos/<int:id_partido>', methods=['GET', 'POST'])
 @login_requerido
 def seleccionar_asientos(id_partido):
-    # Llama a la función integrada que procesa el POST y renderiza
-    return controller_compras.procesar_compra_pasos(id_partido)
+    return ctrl.seleccionar_asientos(id_partido)
 
 @routes_compras.route('/compra/datos', methods=['GET', 'POST'])
 @login_requerido
 def datos_comprador():
-    return controller_compras.procesar_datos_comprador()
+    return ctrl.datos_comprador()
 
-@routes_compras.route('/compra/pago', methods=['GET', 'POST'])
+@routes_compras.route('/compra/procesar', methods=['POST'])
 @login_requerido
-def pago():
-    return controller_compras.procesar_pago_tarjeta()
+def procesar_compra_final():
+    # 1. Tu lógica actual para guardar la entrada en la base de datos...
+    # Ejemplo (ajústalo a cómo guardas tú):
+    nueva_entrada = Entrada(...) 
+    db.session.add(nueva_entrada)
+    db.session.commit() 
 
-@routes_compras.route('/compra/confirmacion')
-@login_requerido
-def confirmacion_de_compra():
-    return controller_compras.mostrar_confirmacion()
+    return redirect(url_for('routes_compras.confirmacion', id_entrada=nueva_entrada.id))
 
-@routes_compras.route('/compra/confirmacion/<int:id_entrada>')
+# Cambia esta ruta:
+@routes_compras.route('/compra/confirmacion/<int:id_entrada>', methods=['GET'])
 @login_requerido
-def confirmacion(id_entrada):
-    # Aquí buscas la entrada por su ID y renderizas el template
-    entrada = Entrada.query.get_or_404(id_entrada)
-    return render_template('compra/confirmacion.html', entrada=entrada)
+def confirmacion(id_entrada): # <--- Ahora recibe el argumento
+    return ctrl.mostrar_confirmacion(id_entrada)

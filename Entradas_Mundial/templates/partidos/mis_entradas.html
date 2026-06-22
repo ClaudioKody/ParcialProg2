@@ -4,6 +4,26 @@
 {% block section_title %}Mis Entradas{% endblock %}
 
 {% block content %}
+    {# DEFINIMOS EL MACRO PRIMERO PARA QUE ESTÉ DISPONIBLE #}
+    {% macro render_tarjeta(entrada) %}
+    <div class="saved-ticket-card" style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 20px; display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #003399; margin-bottom: 15px;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="background: #003399; color: white; padding: 10px; border-radius: 6px; text-align: center; min-width: 60px;">
+                <span style="display:block; font-size: 12px; text-transform: uppercase;">{{ entrada.partido_rel.fecha_hora.strftime('%b') }}</span>
+                <span style="display:block; font-size: 20px; font-weight: bold;">{{ entrada.partido_rel.fecha_hora.strftime('%d') }}</span>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 5px 0;">{{ entrada.partido_rel.equipo1 }} vs {{ entrada.partido_rel.equipo2 }}</h4>
+                <p style="margin: 0; font-size: 13px; color: #666;"><i class="fa-solid fa-location-dot"></i> {{ entrada.partido_rel.estadio }} | Asiento {{ entrada.numero_asiento }}</p>
+            </div>
+        </div>
+        <div>
+            <a href="{{ url_for('routes_compras.confirmacion', id_entrada=entrada.id) }}" style="padding: 8px 15px; border: 1px solid #003399; color: #003399; text-decoration: none; border-radius: 4px; font-size: 14px;">Ver entrada 🎫</a>
+        </div>
+    </div>
+    {% endmacro %}
+
+    {# AHORA QUE YA EXISTE, LO PODEMOS USAR ABAJO #}
     <div class="my-tickets-container" style="margin-top: 5px;">
         <p class="dashboard-subtitle" style="margin-bottom: 15px;">Aquí puedes ver todas las entradas que has comprado.</p>
         
@@ -28,25 +48,7 @@
             {% endfor %}
         </div>
     </div>
-
-    {% macro render_tarjeta(entrada) %}
-    <div class="saved-ticket-card" style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 20px; display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #003399; margin-bottom: 15px;">
-        <div style="display: flex; gap: 20px; align-items: center;">
-            <div style="background: #003399; color: white; padding: 10px; border-radius: 6px; text-align: center; min-width: 60px;">
-                <span style="display:block; font-size: 12px; text-transform: uppercase;">{{ entrada.partido.fecha.strftime('%b') }}</span>
-                <span style="display:block; font-size: 20px; font-weight: bold;">{{ entrada.partido.fecha.strftime('%d') }}</span>
-            </div>
-            <div>
-                <h4 style="margin: 0 0 5px 0;">{{ entrada.partido.equipo_local }} vs {{ entrada.partido.equipo_visitante }}</h4>
-                <p style="margin: 0; font-size: 13px; color: #666;"><i class="fa-solid fa-location-dot"></i> {{ entrada.partido.estadio }} | Asiento {{ entrada.numero_asiento }}</p>
-            </div>
-        </div>
-        <div>
-            <a href="{{ url_for('routes_compras.confirmacion', id_entrada=entrada.id) }}" style="padding: 8px 15px; border: 1px solid #003399; color: #003399; text-decoration: none; border-radius: 4px; font-size: 14px;">Ver entrada 🎫</a>
-        </div>
-    </div>
-    {% endmacro %}
-
+    
     <script>
     function mostrarTab(tab) {
         // Alternar visibilidad de contenedores

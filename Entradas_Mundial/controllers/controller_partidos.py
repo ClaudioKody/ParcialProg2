@@ -25,8 +25,13 @@ def listar_partidos_cliente():
         partidos_query = partidos_query.filter_by(ciudad=filtro_ciudad)
         
     partidos = partidos_query.all()
-    return render_template('partidos/lista_partidos.html', partidos=partidos)
-
+    
+    # 2. Pasamos 'ahora' al template para hacer la comparación en el HTML
+    return render_template(
+        'partidos/lista_partidos.html', 
+        partidos=partidos, 
+        ahora=datetime.now()
+    )
 @login_required
 def mostrar_mis_entradas():
     compras_usuario = Compra.query.filter_by(usuario_id=current_user.id).all()
@@ -39,7 +44,7 @@ def mostrar_mis_entradas():
     historial = []
     
     for entrada in lista_entradas:
-        if entrada.partido.fecha > hoy:
+        if entrada.partido_rel.fecha_hora > hoy:
             proximos.append(entrada)
         else:
             historial.append(entrada)
@@ -58,7 +63,7 @@ def crear_partido():
         return redirect(url_for('routes_partidos.lista_partidos'))
         
     # CAMBIO AQUÍ: de 'admin/crear_partido.html' a 'partidos/crear_partido.html'
-    return render_template('partidos/crear_partido.html')
+    return render_template('admin/crear_partido.html')
 
 @login_required
 def editar_partido(id_partido):

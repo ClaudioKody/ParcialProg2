@@ -63,22 +63,39 @@
         </tbody>
     </table>
     
-    {% else %}
+{% else %}
     <p class="dashboard-subtitle">Seleccioná el partido que querés ver</p>
+    
     <div class="matches-grid">
         {% for p in partidos %}
-        <div class="match-card">
-            <p class="match-group-title">{{ p.fase }}</p>
-            <div class="teams-versus-display">
-                <div class="team-block"><span class="team-name">{{ p.equipo1 }}</span></div>
-                <div class="vs-divider">VS</div>
-                <div class="team-block"><span class="team-name">{{ p.equipo2 }}</span></div>
+            {% set es_pasado = p.fecha_hora < ahora %}
+            
+            <div class="match-card {% if es_pasado %}pasado{% endif %}">
+                <span class="match-group-title" style="font-size: 0.8em; color: #666;">{{ p.fase }}</span>
+                <div class="teams-versus-display" style="margin: 15px 0;">
+                    <div class="team-name" style="font-weight: bold; font-size: 1.1em;">{{ p.equipo1 }}</div>
+                    <div style="color: #999; margin: 5px 0;">VS</div>
+                    <div class="team-name" style="font-weight: bold; font-size: 1.1em;">{{ p.equipo2 }}</div>
+                </div>
+                
+                <div style="font-size: 0.9em; margin-bottom: 15px;">
+                    <i class="fa-solid fa-location-dot"></i> {{ p.estadio }}<br>
+                    <i class="fa-solid fa-calendar"></i> {{ p.fecha_hora.strftime('%d/%m - %H:%M') }}
+                </div>
+
+                {% if es_pasado %}
+                    <button class="btn-buy-ticket btn-disabled" disabled>
+                        <i class="fa-solid fa-ban"></i> Finalizado
+                    </button>
+                {% else %}
+                    <a href="{{ url_for('routes_compras.seleccionar_asientos', id_partido=p.id) }}" class="btn-buy-ticket" style="text-decoration: none;">
+                        <i class="fa-solid fa-ticket"></i> Comprar entrada
+                    </a>
+                {% endif %}
             </div>
-            <button class="btn-buy-ticket"><i class="fa-solid fa-ticket"></i> Comprar entrada</button>
-        </div>
         {% endfor %}
     </div>
-    {% endif %}
+{% endif %}
 
 </div>
 {% endblock %}
