@@ -3,17 +3,16 @@ from Entradas_Mundial.models.model_actividad_turistica import Concierto, Activid
 
 def mostrar_actividades_sede():
     datos_ticket = session.get('ticket_exitoso')
+    
     if not datos_ticket:
-        return "Para ver las actividades primero debés adquirir un ticket.", 400
+        return render_template('turismo/sin_acceso.html') 
         
     ciudad_sede = datos_ticket['ciudad']
-    
     conciertos_locales = Concierto.query.filter_by(ubicacion=ciudad_sede).all()
     recreaciones_locales = ActividadRecreativa.query.filter_by(ubicacion=ciudad_sede).all()
     
-    # CORREGIDO: Redirección a la subcarpeta 'turismo/actividades.html' organizada
     return render_template(
-        'turismo/actividades.html', 
+        'turismo/ver_actividades.html', 
         ciudad=ciudad_sede,
         conciertos=conciertos_locales, 
         recreaciones=recreaciones_locales

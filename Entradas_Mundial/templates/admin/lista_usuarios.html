@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Gestión de Usuarios{% endblock %}
+
+{% block section_title %}Listado de Usuarios Registrados{% endblock %}
+
+{% block content %}
+<div class="dashboard-container" style="background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 10px;">
+        <thead>
+            <tr style="background-color: #f8f9fa; border-bottom: 2px solid #dee2e6;">
+                <th style="padding: 12px; text-align: left;">Nombre</th>
+                <th style="padding: 12px; text-align: left;">Correo</th>
+                <th style="padding: 12px; text-align: left;">Rol</th>
+                <th style="padding: 12px; text-align: center;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in usuarios %}
+            <tr style="border-bottom: 1px solid #eee;">
+                <td style="padding: 12px;">{{ u.nombre }} {{ u.apellido }}</td>
+                <td style="padding: 12px;">{{ u.email }}</td>
+                <td style="padding: 12px;">{{ u.rol }}</td>
+                <td style="padding: 12px; text-align: center;">
+                    <a href="{{ url_for('routes_partidos.banear_usuario', id_usuario=u.id) }}" 
+                       style="color: #dc3545; text-decoration: none; font-weight: bold;"
+                       onclick="return confirm('¿Estás seguro de que deseas banear a este usuario?');">
+                       <i class="fa-solid fa-ban"></i> Banear
+                    </a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" style="padding: 20px; text-align: center;">No hay usuarios registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

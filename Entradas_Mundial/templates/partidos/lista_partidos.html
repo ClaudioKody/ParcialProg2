@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block title %}Panel de Control - FIFA 2026{% endblock %}
+{% block section_title %}
+    {% if current_user.es_admin %}Panel de Administración{% else %}Entradas del Mundial 2026{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="dashboard-matches-container">
+
+    {% if current_user.es_admin %}
+    <p class="dashboard-subtitle">Bienvenido al sistema de gestión global de entradas.</p>
+    
+    <div class="admin-metrics-grid" style="display: flex; gap: 20px; margin-bottom: 30px;">
+        <div class="metric-card" style="background: #f4f4f4; padding: 20px; border-radius: 8px; flex: 1;">
+            <h4>Entradas Vendidas</h4>
+            <p style="font-size: 24px; font-weight: bold; color: #003399;">1,245</p>
+        </div>
+        <div class="metric-card" style="background: #f4f4f4; padding: 20px; border-radius: 8px; flex: 1;">
+            <h4>Recaudación Total</h4>
+            <p style="font-size: 24px; font-weight: bold; color: #003399;">USD 249,000</p>
+        </div>
+    </div>
+
+    <div class="matches-section-header" style="display: flex; justify-content: space-between; align-items: center;">
+        <h3>Listado de Partidos Habilitados</h3>
+        <a href="{{ url_for('routes_partidos.crear_partido') }}" class="btn-buy-ticket" style="background-color: #28a745; text-decoration: none; padding: 10px 20px; color: white; border-radius: 5px; display: inline-block;">
+            <i class="fa-solid fa-plus"></i> Agregar Nuevo Partido
+        </a>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 20px; background: white; table-layout: fixed;">
+        <thead>
+            <tr style="background: #003399; color: white; text-align: left;">
+                <th style="padding: 12px; width: 35%;">Partido</th>
+                <th style="padding: 12px; width: 20%;">Fecha y Hora</th>
+                <th style="padding: 12px; width: 25%;">Estadio</th>
+                <th style="padding: 12px; width: 20%;">Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for p in partidos %}
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd; word-wrap: break-word;">{{ p.equipo1 }} vs {{ p.equipo2 }}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd;">{{ p.fecha_hora }}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd; word-wrap: break-word;">{{ p.estadio }}</td>
+                <td style="padding: 12px; border-bottom: 1px solid #ddd;">
+                    <div style="display: flex; gap: 15px; align-items: center;">
+                        <a href="{{ url_for('routes_partidos.editar_partido', id_partido=p.id) }}" 
+                           style="text-decoration: none; color: #003399; font-weight: bold; font-size: 0.9em;">
+                            <i class="fa-solid fa-pen-to-square"></i> Editar
+                        </a>
+                        <span style="color: #ccc;">|</span>
+                        <a href="{{ url_for('routes_partidos.eliminar_partido', id_partido=p.id) }}" 
+                           onclick="return confirm('¿Estás seguro de que deseas eliminar este partido?');"
+                           style="text-decoration: none; color: #dc3545; font-weight: bold; font-size: 0.9em;">
+                            <i class="fa-solid fa-trash"></i> Eliminar
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+{% else %}
+    <p class="dashboard-subtitle">Seleccioná el partido que querés ver</p>
+    
+    <div class="matches-grid">
+        {% for p in partidos %}
+            {% set es_pasado = p.fecha_hora < ahora %}
+            
+            <div class="match-card {% if es_pasado %}pasado{% endif %}">
+                <span class="match-group-title" style="font-size: 0.8em; color: #666;">{{ p.fase }}</span>
+                <div class="teams-versus-display" style="margin: 15px 0;">
+                    <div class="team-name" style="font-weight: bold; font-size: 1.1em;">{{ p.equipo1 }}</div>
+                    <div style="color: #999; margin: 5px 0;">VS</div>
+                    <div class="team-name" style="font-weight: bold; font-size: 1.1em;">{{ p.equipo2 }}</div>
+                </div>
+                
+                <div style="font-size: 0.9em; margin-bottom: 15px;">
+                    <i class="fa-solid fa-location-dot"></i> {{ p.estadio }}<br>
+                    <i class="fa-solid fa-calendar"></i> {{ p.fecha_hora.strftime('%d/%m - %H:%M') }}
+                </div>
+
+                {% if es_pasado %}
+                    <button class="btn-buy-ticket btn-disabled" disabled>
+                        <i class="fa-solid fa-ban"></i> Finalizado
+                    </button>
+                {% else %}
+                    <a href="{{ url_for('routes_compras.seleccionar_asientos', id_partido=p.id) }}" class="btn-buy-ticket" style="text-decoration: none;">
+                        <i class="fa-solid fa-ticket"></i> Comprar entrada
+                    </a>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}
+
+</div>
+{% endblock %}

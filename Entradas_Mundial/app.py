@@ -1,65 +1,68 @@
 from flask import Flask, redirect, url_for
 from Entradas_Mundial.config import Config
 from Entradas_Mundial.models import db
+from flask_login import LoginManager
+from werkzeug.security import generate_password_hash
 
 app = Flask(__name__)
+
 app.config.from_object(Config)
 
-# Clave secreta para manejo de sesiones y cookies seguras
-app.secret_key = 'clave_secreta_mundial_2026'
+if not app.config.get('SECRET_KEY'):
+    app.config['SECRET_KEY'] = 'una_clave_por_defecto_muy_segura_para_desarrollo'
 
-# Inicialización de SQLAlchemy con la App
 db.init_app(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
+login_manager.login_view = 'routes_auth.login'
 
-# ==================== IMPORTACIÓN DE MODELOS (POO) ====================
-from Entradas_Mundial.models.model_usuarios import UsuarioBase, UsuarioCliente, Administrador 
-from Entradas_Mundial.models.model_partido import Partido
-from Entradas_Mundial.models.model_compra import Compra
-from Entradas_Mundial.models.model_entradas import Entrada
-from Entradas_Mundial.models.model_actividad_turistica import ActividadTuristica, Concierto, ActividadRecreativa
+from Entradas_Mundial.models.model_usuarios import UsuarioBase
+@login_manager.user_loader
+def load_user(user_id):
+    return UsuarioBase.query.get(int(user_id))
 
-# ==================== IMPORTACIÓN DE CONTROLADORES DE RUTA ====================
 from Entradas_Mundial.routes.routes_auth import routes_auth
 from Entradas_Mundial.routes.lista_partidos import routes_partidos
 from Entradas_Mundial.routes.routes_compras import routes_compras
 from Entradas_Mundial.routes.ver_turismo import routes_turismo
 from Entradas_Mundial.routes.routes_ayuda import routes_ayuda
 
-# ==================== REGISTRO DE BLUEPRINTS EN FLASK ====================
-app.register_blueprint(routes_auth)
-app.register_blueprint(routes_partidos)
-app.register_blueprint(routes_compras)
-app.register_blueprint(routes_turismo)
-app.register_blueprint(routes_ayuda)
+app.register_blueprint(routes_auth, url_prefix='/auth')
+app.register_blueprint(routes_partidos, url_prefix='/partidos')
+app.register_blueprint(routes_compras, url_prefix='/compras')
+app.register_blueprint(routes_turismo, url_prefix='/turismo')
+app.register_blueprint(routes_ayuda, url_prefix='/ayuda')
 
-# RUTA RAÍZ: Redirige automáticamente a la pantalla de bienvenida / login
 @app.route('/')
 def inicio():
     return redirect(url_for('routes_auth.index_auth'))
 
-# ==================== ARRANQUE DE LA APLICACIÓN ====================
 if __name__ == '__main__':
     with app.app_context():
-        # Crea las tablas en MySQL si no existen en base a tus clases de modelos
         db.create_all()
         
-        # Validación y carga del Administrador por Defecto
-        admin_existe = Administrador.query.filter_by(rol='administrador').first()
+        from Entradas_Mundial.models.model_usuarios import Administrador
         
-        if not admin_existe:
-            admin_fijo = Administrador(
-                nombre="Priscila",
-                apellido="Toledano",
-                email="admin@mundial.com",
-                password="admin123",  
-                rol="administrador",  
-                dni="46664548"
-            )
-            db.session.add(admin_fijo)
-            db.session.commit()
-            print("¡Administrador oficial registrado con éxito en MySQL!")
-        else:
-            print("El administrador oficial ya está registrado en la base de datos.")
+        lista_admins = [
+            {"nombre": "Priscila", "apellido": "Toledano", "email": "admin@mundial.com", "dni": "46664548"},
+            {"nombre": "Tomás", "apellido": "Naveda", "email": "admin1@mundial.com", "dni": "46662116"},
+            {"nombre": "Claudio", "apellido": "Pérez", "email": "admin2@mundial.com", "dni": "46328090"},
+            {"nombre": "Selene", "apellido": "Quintero", "email": "admin3@mundial.com", "dni": "45139959"}
+        ]
+        
+        for datos in lista_admins:
+            if not Administrador.query.filter_by(email=datos['email']).first():
+                admin_nuevo = Administrador(
+                    nombre=datos['nombre'],
+                    apellido=datos['apellido'],
+                    email=datos['email'],
+                    password=generate_password_hash("admin123"),
+                    rol="administrador",
+                    dni=datos['dni']
+                )
+                db.session.add(admin_nuevo)
+                print(f"Administrador {datos['nombre']} registrado correctamente.")
+        
+        db.session.commit()
             
-    print("¡Aplicación Flask corriendo en modo debug!")
     app.run(debug=True)

@@ -1,92 +1,101 @@
 import uuid
+import qrcode
+import io
+import base64
 from flask import render_template, request, redirect, url_for, flash, session
+from flask_login import current_user, login_required
 from Entradas_Mundial.models import db
 from Entradas_Mundial.models.model_partido import Partido
 from Entradas_Mundial.models.model_compra import Compra
 from Entradas_Mundial.models.model_entradas import Entrada
 
-# PASO 2: Selección de ubicación y cantidad de tickets
-def procesar_seleccion_asientos(id_partido):
+@login_required
+def seleccionar_asientos(id_partido):
     partido = Partido.query.get_or_404(id_partido)
-    # CORREGIDO: Redirección al archivo HTML del paso 2 que creamos
-    return render_template('partidos/seleccionar_asientos.html', partido=partido)
-
-# PASO 3: Formulario para ingresar DNI, nombres y procesar lógica de base de datos
-def procesar_datos_comprador():
-    return render_template('partidos/datos_comprador.html')
-
-# PASO 4: Pasarela de pago simulada con tarjeta de crédito
-def procesar_pago_tarjeta():
-    return render_template('partidos/pago.html')
-
-# PASO 5: Muestra la pantalla de éxito final
-def mostrar_confirmacion():
-    datos_ticket = session.get('ticket_exitoso')
-    if not datos_ticket:
-        # CORREGIDO: Sincronizado a la ruta correcta si falla la sesión
-        return redirect(url_for('routes_partidos.lista_partidos'))
-    
-    # CORREGIDO: Apunta de manera exacta a partidos/confirmacion.html
-    return render_template('partidos/confirmacion.html', ticket=datos_ticket)
-
-# FUNCIÓN ANTERIOR INTEGRADA: Mantiene viva la lógica interna que crearon tus compañeros
-def procesar_compra_pasos(id_partido):
-    partido = Partido.query.get_or_404(id_partido)
-    
     if request.method == 'POST':
-        nombre_titular = request.form.get('nombre')
-        apellido_titular = request.form.get('apellido')
-        dni_titular = request.form.get('dni')
-        email_titular = request.form.get('email')
-        categoria_asiento = request.form.get('categoria_asiento')
-        monto_total = partido.precio_base
-        adicionales_precio = 0
-        
-        if request.form.get('hospitality') == 'on': adicionales_precio += 75
-        if request.form.get('estacionamiento') == 'on': adicionales_precio += 30
-        if request.form.get('kit_bienvenida') == 'on': adicionales_precio += 45
-        
-        monto_total += adicionales_precio
 
-        if partido.capacidad_disponible <= 0:
-            flash('Lo sentimos, ya no quedan entradas disponibles para este partido.', 'danger')
-            return redirect(url_for('routes_partidos.lista_partidos'))
-            
-        nueva_compra = Compra(
-            usuario_id=session.get('user_id'),
-            monto_total=monto_total,
-            metodo_pago="Tarjeta de Crédito/Débito"
-        )
-        db.session.add(nueva_compra)
-        db.session.flush()
-
-        codigo_confirmacion = str(uuid.uuid4()).upper()[:10]
-
-        nueva_entrada = Entrada(
-            partido_id=partido.id,
-            compra_id=nueva_compra.id,
-            categoria=categoria_asiento,
-            precio=monto_total,
-            codigo_acceso=codigo_confirmacion 
-        )
+        categoria = request.form.get('categoria')
+        cantidad = request.form.get('cantidad')
         
-        partido.capacidad_disponible -= 1
-        
-        db.session.add(nueva_entrada)
-        db.session.commit()
-
-        session['ticket_exitoso'] = {
-            'titular': f"{nombre_titular} {apellido_titular}",
-            'dni': dni_titular,
-            'email': email_titular,
-            'partido': f"{partido.pais_local} vs {partido.pais_visitante}",
-            'estadio': partido.estadio,
-            'ciudad': partido.ciudad,
-            'categoria': categoria_asiento,
-            'total': monto_total,
-            'codigo_confirmacion': codigo_confirmacion
+        session['pre_compra'] = {
+            'id_partido': id_partido,
+            'categoria': categoria,
+            'cantidad': cantidad
         }
-        
-        return redirect(url_for('routes_compras.confirmacion'))
+        session.modified = True
+        return redirect(url_for('routes_compras.datos_comprador'))
+    return render_template('compra/seleccionar_asientos.html', partido=partido)
 
-    return render_template('partidos/seleccionar_asientos.html', partido=partido)
+@login_required
+def datos_comprador():
+    if 'pre_compra' not in session:
+        flash("Por favor, selecciona los asientos primero.", "warning")
+        return redirect(url_for('routes_partidos.lista_partidos'))
+    return render_template('compra/datos_comprador.html')
+
+@login_required
+def procesar_compra_final():
+    pre_compra = session.get('pre_compra')
+    if not pre_compra:
+        return redirect(url_for('routes_partidos.lista_partidos'))
+        
+    partido = Partido.query.get_or_404(pre_compra['id_partido'])
+    
+    nombre = request.form.get('nombre')
+    apellido = request.form.get('apellido')
+    email = request.form.get('email')
+    dni = request.form.get('dni')
+    nacionalidad = request.form.get('nacionalidad')
+    numero_asiento = request.form.get('numero_asiento')
+    
+    monto_total = partido.precio_base * int(pre_compra['cantidad'])
+    
+    nueva_compra = Compra(
+        usuario_id=current_user.id,
+        total_pagado=monto_total,
+        metodo_pago="Tarjeta",
+        estado_pago="completado"
+    )
+    db.session.add(nueva_compra)
+    db.session.flush() 
+
+    codigo = str(uuid.uuid4()).upper()[:10]
+    nueva_entrada = Entrada(
+        nombre_asistente=nombre,
+        apellido_asistente=apellido,
+        email_asistente=email,
+        documento_asistente=dni,
+        nacionalidad_asistente=nacionalidad,
+        numero_asiento=numero_asiento,
+        categoria_asiento=pre_compra['categoria'],
+        compra_id=nueva_compra.id,
+        partido_id=partido.id,
+        codigo_acceso=codigo
+    )
+    
+    partido.capacidad_disponible -= int(pre_compra['cantidad'])
+    db.session.add(nueva_entrada)
+    db.session.commit()
+
+    session.pop('pre_compra', None)
+    session['ticket_exitoso'] = {
+        'titular': f"{nombre} {apellido}", 
+        'codigo': codigo, 
+        'ciudad': partido.ciudad,
+        'partido': f"{partido.equipo1} vs {partido.equipo2}"
+    }
+    
+    return redirect(url_for('routes_compras.confirmacion', id_entrada=nueva_entrada.id))
+
+@login_required
+def mostrar_confirmacion(id_entrada):
+    entrada = Entrada.query.get_or_404(id_entrada)
+    qr_code = generar_qr_base64(entrada.codigo_acceso)
+    return render_template('compra/confirmacion.html', entrada=entrada, qr_code=qr_code)
+
+def generar_qr_base64(data):
+    qr = qrcode.make(data)
+    buffer = io.BytesIO()
+    qr.save(buffer, format="PNG")
+    buffer.seek(0)
+    return base64.b64encode(buffer.getvalue()).decode('utf-8')

@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+
+{% block title %}Iniciar Sesión - FIFA 2026{% endblock %}
+
+{% block content %}
+<div class="auth-bg-wrapper">
+    <div class="auth-card">
+        <div class="auth-tabs">
+            <a href="{{ url_for('routes_auth.login') }}" class="auth-tab-btn active" style="text-align: center; text-decoration: none;">
+                <i class="fa-solid fa-right-to-bracket"></i> INICIAR SESIÓN
+            </a>
+            <a href="{{ url_for('routes_auth.registro') }}" class="auth-tab-btn" style="text-align: center; text-decoration: none; background: #e9ecef;">
+                <i class="fa-solid fa-user-plus"></i> REGISTRARSE
+            </a>
+        </div>
+
+        <div class="auth-body">
+            <h3 style="color: var(--azul-fifa-oscuro); font-weight: 700; margin-bottom: 20px; text-align: center;">Acceso</h3>
+            
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}" style="color: red; margin-bottom: 15px; text-align: center;">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+            
+            <form action="{{ url_for('routes_auth.login') }}" method="POST" autocomplete="off">
+                <div class="form-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required autocomplete="off">
+                </div>
+                <div class="form-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required autocomplete="off">
+                </div>
+
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" name="es_admin" id="checkAdmin" value="on" onclick="toggleDNI()">
+                    <label class="form-check-label" for="checkAdmin">¿Sos administrador?</label>
+                </div>
+
+                <div class="form-group mb-3" id="campoDNI" style="display: none;">
+                    <input type="text" name="dni" class="form-control" placeholder="Ingrese su DNI de Administrador" autocomplete="off">
+                </div>
+
+                <button type="submit" class="btn-buy-ticket" style="width: 100%; padding: 12px; border: none; cursor: pointer;">
+                    Ingresar
+                </button>
+            </form>
+            
+            <div class="text-center mt-3">
+                <a href="{{ url_for('routes_auth.recuperar_password') }}" style="font-size: 12px; color: var(--azul-fifa-medio);">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function toggleDNI() {
+        var checkBox = document.getElementById("checkAdmin");
+        var campoDNI = document.getElementById("campoDNI");
+        if (checkBox.checked == true){
+            campoDNI.style.display = "block";
+        } else {
+            campoDNI.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

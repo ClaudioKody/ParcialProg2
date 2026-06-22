@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Entradas - FIFA 2026{% endblock %}
+{% block section_title %}Mis Entradas{% endblock %}
+
+{% block content %}
+    {# DEFINIMOS EL MACRO PRIMERO PARA QUE ESTÉ DISPONIBLE #}
+    {% macro render_tarjeta(entrada) %}
+    <div class="saved-ticket-card" style="background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); padding: 20px; display: flex; align-items: center; justify-content: space-between; border-left: 4px solid #003399; margin-bottom: 15px;">
+        <div style="display: flex; gap: 20px; align-items: center;">
+            <div style="background: #003399; color: white; padding: 10px; border-radius: 6px; text-align: center; min-width: 60px;">
+                <span style="display:block; font-size: 12px; text-transform: uppercase;">{{ entrada.partido_rel.fecha_hora.strftime('%b') }}</span>
+                <span style="display:block; font-size: 20px; font-weight: bold;">{{ entrada.partido_rel.fecha_hora.strftime('%d') }}</span>
+            </div>
+            <div>
+                <h4 style="margin: 0 0 5px 0;">{{ entrada.partido_rel.equipo1 }} vs {{ entrada.partido_rel.equipo2 }}</h4>
+                <p style="margin: 0; font-size: 13px; color: #666;"><i class="fa-solid fa-location-dot"></i> {{ entrada.partido_rel.estadio }} | Asiento {{ entrada.numero_asiento }}</p>
+            </div>
+        </div>
+        <div>
+            <a href="{{ url_for('routes_compras.confirmacion', id_entrada=entrada.id) }}" style="padding: 8px 15px; border: 1px solid #003399; color: #003399; text-decoration: none; border-radius: 4px; font-size: 14px;">Ver entrada 🎫</a>
+        </div>
+    </div>
+    {% endmacro %}
+
+    {# AHORA QUE YA EXISTE, LO PODEMOS USAR ABAJO #}
+    <div class="my-tickets-container" style="margin-top: 5px;">
+        <p class="dashboard-subtitle" style="margin-bottom: 15px;">Aquí puedes ver todas las entradas que has comprado.</p>
+        
+        <div class="tickets-tabs" style="margin-bottom: 25px; border-bottom: 1px solid #ddd; padding-bottom: 10px;">
+            <span id="tab-btn-proximos" onclick="mostrarTab('proximos')" style="font-weight: bold; color: #003399; border-bottom: 3px solid #003399; padding-bottom: 10px; margin-right: 20px; cursor: pointer;">Próximos partidos</span>
+            <span id="tab-btn-historial" onclick="mostrarTab('historial')" style="color: #666; cursor: pointer; padding-bottom: 10px;">Historial</span>
+        </div>
+
+        <div id="contenedor-proximos">
+            {% for entrada in proximos %}
+                {{ render_tarjeta(entrada) }}
+            {% else %}
+                <p>No tienes próximos partidos.</p>
+            {% endfor %}
+        </div>
+
+        <div id="contenedor-historial" style="display: none;">
+            {% for entrada in historial %}
+                {{ render_tarjeta(entrada) }}
+            {% else %}
+                <p>No tienes entradas en tu historial.</p>
+            {% endfor %}
+        </div>
+    </div>
+    
+    <script>
+    function mostrarTab(tab) {
+        // Alternar visibilidad de contenedores
+        document.getElementById('contenedor-proximos').style.display = (tab === 'proximos') ? 'block' : 'none';
+        document.getElementById('contenedor-historial').style.display = (tab === 'historial') ? 'block' : 'none';
+        
+        // Alternar estilos de botones
+        document.getElementById('tab-btn-proximos').style.fontWeight = (tab === 'proximos') ? 'bold' : 'normal';
+        document.getElementById('tab-btn-proximos').style.color = (tab === 'proximos') ? '#003399' : '#666';
+        document.getElementById('tab-btn-proximos').style.borderBottom = (tab === 'proximos') ? '3px solid #003399' : 'none';
+        
+        document.getElementById('tab-btn-historial').style.fontWeight = (tab === 'historial') ? 'bold' : 'normal';
+        document.getElementById('tab-btn-historial').style.color = (tab === 'historial') ? '#003399' : '#666';
+        document.getElementById('tab-btn-historial').style.borderBottom = (tab === 'historial') ? '3px solid #003399' : 'none';
+    }
+    </script>
+{% endblock %}

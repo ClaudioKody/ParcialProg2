@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Entrada Confirmada - FIFA 2026{% endblock %}
+{% block section_title %}Tu entrada ha sido generada{% endblock %}
+
+{% block content %}
+<div class="booking-container" style="text-align: center;">
+    
+    <div style="background: #28a745; color: white; padding: 15px; border-radius: 8px; display: inline-block; margin-bottom: 30px;">
+        <i class="fa-solid fa-circle-check"></i> ¡Entrada generada con éxito!
+    </div>
+    
+    <div class="ticket-receipt-card" style="display: flex; max-width: 700px; margin: 0 auto; background: white; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); overflow: hidden; border-left: 5px solid #003399;">
+        
+        <div style="flex: 1.5; padding: 25px; text-align: left; background: #0b2240; color: white;">
+            <p style="text-transform: uppercase; font-size: 12px; color: #ffcc00;">{{ entrada.partido_rel.fase }}</p>
+            <h2 style="margin: 10px 0;">{{ entrada.partido_rel.equipo1 }} vs {{ entrada.partido_rel.equipo2 }}</h2>
+            <p><i class="fa-regular fa-calendar"></i> {{ entrada.partido_rel.fecha_hora.strftime('%d/%m/%Y %H:%M') }}</p>
+            <p><i class="fa-solid fa-location-dot"></i> {{ entrada.partido_rel.estadio }}</p>
+            <hr style="border-color: rgba(255,255,255,0.2); margin: 15px 0;">
+            <p>Asiento: <strong>{{ entrada.numero_asiento }}</strong></p>
+        </div>
+        
+        <div style="flex: 1; padding: 25px; background: #fff; display: flex; flex-direction: column; align-items: center; justify-content: center; border-left: 2px dashed #ccc;">
+            <p style="font-size: 12px; margin-bottom: 10px; color: #666;">CÓDIGO QR</p>
+            <img src="data:image/png;base64,{{ qr_code }}" alt="QR" style="width: 140px; height: 140px;">
+            <p style="font-family: monospace; margin-top: 10px; font-size: 12px;">{{ entrada.codigo_acceso }}</p>
+        </div>
+    </div>
+    
+    <div class="tourism-prompt-box" style="margin-top: 40px; background: #f8f9fa; border: 1px solid #e3e6f0; padding: 25px; border-radius: 12px; max-width: 700px; margin-left: auto; margin-right: auto; display:
+
+    {% endblock %}

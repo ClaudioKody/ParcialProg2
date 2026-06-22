@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro - FIFA 2026{% endblock %}
+
+{% block content %}
+<div class="auth-bg-wrapper">
+    <div class="auth-card">
+        <div class="auth-tabs">
+            <a href="{{ url_for('routes_auth.login') }}" class="auth-tab-btn" style="text-align: center; text-decoration: none; background: #e9ecef;">
+                <i class="fa-solid fa-right-to-bracket"></i> INICIAR SESIÓN
+            </a>
+            <a href="{{ url_for('routes_auth.registro') }}" class="auth-tab-btn active" style="text-align: center; text-decoration: none;">
+                <i class="fa-solid fa-user-plus"></i> REGISTRARSE
+            </a>
+        </div>
+
+        <div class="auth-body">
+            <h3 style="color: var(--azul-fifa-oscuro); font-weight: 700; margin-bottom: 20px; text-align: center;">Crear Cuenta</h3>
+            
+            <form action="{{ url_for('routes_auth.registro') }}" method="POST">
+                <div class="form-group mb-3">
+                    <input type="text" name="nombre" class="form-control" placeholder="Nombre" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="text" name="apellido" class="form-control" placeholder="Apellido" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="email" name="email" class="form-control" placeholder="Correo electrónico" required>
+                </div>
+                <div class="form-group mb-3">
+                    <input type="password" name="password" class="form-control" placeholder="Contraseña" required>
+                </div>
+
+                <button type="submit" class="btn-buy-ticket" style="width: 100%; padding: 12px; border: none; cursor: pointer; margin-top: 10px;">
+                    Registrarse
+                </button>
+            </form>
+
+            <div class="auth-card-footer">
+                <a href="#">¿Olvidaste tu contraseña?</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
